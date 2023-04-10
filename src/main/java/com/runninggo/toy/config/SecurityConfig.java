@@ -9,30 +9,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .cors().disable()
-//                .csrf().disable()
-//                .formLogin().disable()
-//                .headers().frameOptions().disable();
-//    }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//        http.headers().frameOptions().disable();
-//        http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .defaultSuccessUrl("/").permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().disable()
+                .csrf().disable()
+                .formLogin().disable()
+                .headers().frameOptions().disable();
+    }
 
     //passwordEncoder
     @Bean

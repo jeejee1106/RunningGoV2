@@ -61,6 +61,11 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
@@ -216,18 +221,18 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.3</version>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet.jsp</groupId>-->
+<!--            <artifactId>javax.servlet.jsp-api</artifactId>-->
+<!--            <version>2.3.3</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>jstl</artifactId>-->
+<!--&lt;!&ndash;            <version>1.2</version>&ndash;&gt;-->
+<!--        </dependency>-->
 
         <!--====================== valid 관련 디펜던시 boot걸로 추가 완료 ======================-->
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
