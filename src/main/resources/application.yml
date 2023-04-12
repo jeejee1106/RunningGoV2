@@ -8,6 +8,17 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: [google 아이디]
+    password: [앱 비밀번호]
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 mybatis:
   type-aliases-package: com.runninggo.toy.domain
   mapper-locations: mapper/**/**.xml
