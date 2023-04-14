@@ -1,0 +1,41 @@
+/* -----------------------------------------------------------------------------
+
+# custom404 Styles
+
+----------------------------------------------------------------------------- */
+.error404-wrap{
+    height: 477px;
+    margin-top: 120px;
+    text-align: center;
+}
+
+.error404-title{
+    margin-top: 60px;
+}
+
+.error404-btn{
+    width: 100px;
+    height: 50px;
+    background: #ffffff;
+    font-size: 12pt;
+    border: solid 1px #d0d0d0;
+    margin-top: 50px;
+}
+
+.error404-btn:hover{
+    border: 1px solid #2146d0;
+    background: #2146d0;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* -----------------------------------------------------------------------------
+
+# custom500 Styles
+
+----------------------------------------------------------------------------- */
+#error500-icon{
+    width: 200px;
+    height: 200px;
+}
