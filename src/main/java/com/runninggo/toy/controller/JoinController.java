@@ -31,11 +31,6 @@ public class JoinController {
         binder.setValidator(joinCkValidator);
     }
 
-    @GetMapping("/joinForm")
-    public String joinForm() {
-        return "/member/joinForm";
-    }
-
     @PostMapping("/joinCheck")
     public String joinCheck(@Valid MemberDto memberDto, Errors errors, Model model) throws Exception{
 
@@ -76,5 +71,4 @@ public class JoinController {
         return memberService.idCheck(id);
     }
 
-    //git push check
 }

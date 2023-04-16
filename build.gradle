@@ -36,7 +36,7 @@ dependencies {
 group = 'com.toy.runninggo'
 version = '1.0-SNAPSHOT'
 description = 'SpringToyProject-RunningGoV2'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 publishing {
     publications {

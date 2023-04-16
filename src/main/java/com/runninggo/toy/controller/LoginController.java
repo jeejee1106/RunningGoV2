@@ -34,11 +34,6 @@ public class LoginController {
         binder.setValidator(loginCheckValidator);
     }
 
-    @GetMapping("/loginForm")
-    public String loginForm() {
-        return "/member/loginForm";
-    }
-
     @PostMapping("/login")
     public String login(@Valid MemberDto memberDto, Errors errors, boolean saveId,
                         HttpServletResponse response, HttpSession session) throws Exception {
@@ -72,21 +67,11 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @GetMapping("/findIdForm")
-    public String findIdForm() {
-        return "/member/findIdForm";
-    }
-
     @PostMapping("/findId")
     public String findId(MemberDto memberDto, Model model) throws Exception{
         List<MemberDto> idList = memberService.findId(memberDto);
         model.addAttribute("idList", idList);
         return "/member/findIdResult";
-    }
-
-    @GetMapping("/findPassForm")
-    public String findPassForm() {
-        return "/member/findPassForm";
     }
 
     @PostMapping("/findPass")

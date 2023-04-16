@@ -25,16 +25,6 @@ public class PlaceController {
         this.placeService = placeService;
     }
 
-    @GetMapping("/recmndForm")
-    public String placeRcmndForm() {
-        return "/place/recmndForm";
-    }
-
-    @GetMapping("/writeForm")
-    public String writeForm() {
-        return "/place/writeForm";
-    }
-
     @PostMapping("/recmnd")
     public String postsInsert(@Valid PlaceDto placeDto, Errors errors) throws Exception{
 
