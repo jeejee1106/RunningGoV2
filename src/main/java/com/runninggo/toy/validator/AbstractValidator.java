@@ -1,6 +1,7 @@
 package com.runninggo.toy.validator;
 
 import com.runninggo.toy.domain.MemberDto;
+import com.runninggo.toy.domain.MemberRequestDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.Errors;
@@ -11,7 +12,7 @@ public abstract class AbstractValidator<T> implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return MemberDto.class.isAssignableFrom(clazz); //clazz가 MemberDto 또는 그 자손인지 확인
+        return MemberRequestDto.JoinReqDto.class.isAssignableFrom(clazz); //clazz가 MemberDto 또는 그 자손인지 확인
     }
 
     @SneakyThrows

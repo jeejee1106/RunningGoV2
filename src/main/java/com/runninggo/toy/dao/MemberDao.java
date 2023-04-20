@@ -1,14 +1,15 @@
 package com.runninggo.toy.dao;
 
 import com.runninggo.toy.domain.MemberDto;
+import com.runninggo.toy.domain.MemberRequestDto;
 
 import java.util.List;
 
 public interface MemberDao {
-    int insertMember(MemberDto memberDto);
+    int insertMember(MemberRequestDto.JoinReqDto param);
     int idCheck(String id);
     int login(MemberDto memberDto) throws Exception;
-    int updateMailKey(MemberDto memberDto) throws Exception;
+    int updateMailKey(MemberRequestDto.JoinReqDto param) throws Exception;
     int updateMailAuth(MemberDto memberDto) throws Exception;
     int emailAuthFail(String id) throws Exception;
     List<MemberDto> findId(MemberDto memberDto) throws Exception;

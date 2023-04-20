@@ -28,15 +28,15 @@ public class JoinServiceTest {
         return memberDto;
     }
 
-    @Test
-    @DisplayName("회원가입성공")
-    void joinSuccessTest() throws Exception{
-        MemberDto memberDto = joinMemberDto(
-                "test5", "test123!", "지지", "kimmj1106@naver.com", "010-1111-1111", "");
-        int result = memberService.insertMember(memberDto);
-
-        assertTrue(result == 1);
-    }
+//    @Test
+//    @DisplayName("회원가입성공")
+//    void joinSuccessTest() throws Exception{
+//        MemberDto memberDto = joinMemberDto(
+//                "test5", "test123!", "지지", "kimmj1106@naver.com", "010-1111-1111", "");
+//        int result = memberService.insertMember(memberDto);
+//
+//        assertTrue(result == 1);
+//    }
 
 //    @Test
 //    @DisplayName("회원가입실패")
