@@ -2,18 +2,17 @@ package com.runninggo.toy.domain;
 
 import com.runninggo.toy.mail.TempKey;
 import lombok.Getter;
+import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class MemberRequestDto {
 
     @Getter
-    public class JoinReqDto {
+    public static class JoinReqDto {
+
         @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")
         @NotNull(message = "필수입력 항목입니다.")
         private String id;
@@ -60,6 +59,18 @@ public class MemberRequestDto {
 
         public void setEncodePass(String pass) {
             setPass(pass);
+        }
+
+        public JoinReqDto(String id, String pass, String passCheck, String name, String email, String hp, String area, LocalDateTime join_date, String mailKey) {
+            this.id = id;
+            this.pass = pass;
+            this.passCheck = passCheck;
+            this.name = name;
+            this.email = email;
+            this.hp = hp;
+            this.area = area;
+            this.join_date = join_date;
+            this.mailKey = mailKey;
         }
     }
 

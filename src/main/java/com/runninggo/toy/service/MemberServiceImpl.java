@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService{
                     "<br>RunninGo에 오신것을 환영합니다!" +
                     "<br>아래 [이메일 인증 확인]을 눌러주세요." +
                     "<br><a href='http://localhost:8080/join/registerEmail?email=" + param.getEmail() +
-                    "&mail_key=" + param.getMailKey() +
+                    "&mailKey=" + param.getMailKey() +
                     "' target='_blank'>이메일 인증 확인</a>");
             sendMail.setFrom(myInfo.runningGoId, "러닝고");
             sendMail.setTo(param.getEmail());
