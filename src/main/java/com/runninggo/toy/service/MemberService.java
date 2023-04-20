@@ -12,7 +12,7 @@ public interface MemberService {
     int insertMember(MemberRequestDto.JoinReqDto param) throws Exception;
     int idCheck(String id);
     int login(MemberDto memberDto) throws Exception;
-    int updateMailAuth(MemberDto memberDto) throws Exception;
+    int updateMailAuth(MemberRequestDto.UpdateMailAuthReqDto param) throws Exception;
     int emailAuthFail(String id) throws Exception;
     List<MemberDto> findId(MemberDto memberDto) throws Exception;
     void findPass(MemberDto memberDto) throws Exception;

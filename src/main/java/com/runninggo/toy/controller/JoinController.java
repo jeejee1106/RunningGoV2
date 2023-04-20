@@ -58,9 +58,9 @@ public class JoinController {
     }
 
     @GetMapping("/registerEmail")
-    public String emailConfirm(MemberDto memberDto)throws Exception{
+    public String emailConfirm(MemberRequestDto.UpdateMailAuthReqDto param)throws Exception{
 
-        memberService.updateMailAuth(memberDto);
+        memberService.updateMailAuth(param);
 
         return "/member/emailAuthSuccess";
     }

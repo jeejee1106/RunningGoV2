@@ -2,7 +2,6 @@ package com.runninggo.toy.domain;
 
 import com.runninggo.toy.mail.TempKey;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -70,6 +69,22 @@ public class MemberRequestDto {
             this.hp = hp;
             this.area = area;
             this.join_date = join_date;
+            this.mailKey = mailKey;
+        }
+    }
+
+    @Getter
+    public static class UpdateMailAuthReqDto {
+
+        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+[.][A-Za-z]{2,6}$", message = "이메일 형식이 올바르지 않습니다.")
+        @NotNull(message = "필수입력 항목입니다.")
+        private String email;
+
+        @NotNull
+        private String mailKey;
+
+        public UpdateMailAuthReqDto(String email, String mailKey) {
+            this.email = email;
             this.mailKey = mailKey;
         }
     }

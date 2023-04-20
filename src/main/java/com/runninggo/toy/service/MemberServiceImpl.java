@@ -92,8 +92,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int updateMailAuth(MemberDto memberDto) throws Exception {
-        return memberDao.updateMailAuth(memberDto);
+    public int updateMailAuth(MemberRequestDto.UpdateMailAuthReqDto param) throws Exception {
+        return memberDao.updateMailAuth(param);
     }
 
     @Override
