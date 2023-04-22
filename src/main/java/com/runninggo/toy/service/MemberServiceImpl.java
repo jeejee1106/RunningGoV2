@@ -7,6 +7,7 @@ import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,17 +26,28 @@ public class MemberServiceImpl implements MemberService{
     JavaMailSender javaMailSender;
     BCryptPasswordEncoder passwordEncoder;
     MyInfo myInfo;
+    MessageSourceAccessor messageSource;
 
-    public MemberServiceImpl(MemberDao memberDao, JavaMailSender javaMailSender, BCryptPasswordEncoder passwordEncoder, MyInfo myInfo) {
+    public MemberServiceImpl(MemberDao memberDao, JavaMailSender javaMailSender,
+                             BCryptPasswordEncoder passwordEncoder, MyInfo myInfo,
+                             MessageSourceAccessor messageSource) {
         this.memberDao = memberDao;
         this.javaMailSender = javaMailSender;
         this.passwordEncoder = passwordEncoder;
         this.myInfo = myInfo;
+        this.messageSource = messageSource;
     }
 
     @Transactional
     @Override
     public int insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
+
+        //아이디 중복체크
+        if (memberDao.idCheck(param.getId()) == 1) {
+            throw new IllegalStateException(messageSource.getMessage("id.duplicate"));
+//            errors.rejectValue("id", "id.duplicate"); //필드, 에러코드
+        }
+
         //회원가입 시 필요한 메일키 넣어주기
         param.InsertMailKey();
 

@@ -18,29 +18,31 @@ import javax.validation.Valid;
 public class JoinController {
 
     MemberService memberService;
-    JoinCkValidator joinCkValidator;
+//    JoinCkValidator joinCkValidator;
 
-    public JoinController(MemberService memberService, JoinCkValidator joinCkValidator) {
+    public JoinController(MemberService memberService) {
         this.memberService = memberService;
-        this.joinCkValidator = joinCkValidator;
+//        this.joinCkValidator = joinCkValidator;
     }
 
-    @InitBinder
-    public void validator(WebDataBinder binder) {
-        binder.setValidator(joinCkValidator);
-    }
+//    @InitBinder
+//    public void validator(WebDataBinder binder) {
+//        binder.setValidator(joinCkValidator);
+//    }
 
     @PostMapping("/joinCheck")
-    public String joinCheck(@Valid JoinRequestDto.JoinReqDto param, Errors errors, Model model) throws Exception{
+    public String joinCheck(@Valid JoinRequestDto.JoinReqDto param, Model model) throws Exception{
 
         //작성한 정보를 유지하고, joinSuccessForm에 name전송하기 위함.
         model.addAttribute("memberDto", param);
 
         //만약 회원가입에 실패한다면
-        if (errors.hasErrors()) {
-            //유효성 검사에 실패하면 작성중이던 폼 그대로 유지
-            return "/member/joinForm";
-        }
+
+
+//        if (errors.hasErrors()) {
+//            //유효성 검사에 실패하면 작성중이던 폼 그대로 유지
+//            return "/member/joinForm";
+//        }
 
         //유효성 검사를 통과하면 insert 후 페이지 이동
         int result = memberService.insertMember(param);
