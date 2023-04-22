@@ -42,10 +42,19 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
 
-        //아이디 중복체크
-        if (memberDao.idCheck(param.getId()) == 1) {
-            throw new IllegalStateException(messageSource.getMessage("id.duplicate"));
-//            errors.rejectValue("id", "id.duplicate"); //필드, 에러코드
+        /**
+         * try-catch를 안넣으면 화면에서 500에러 페이지로 넘어가고...
+         * 넣으면....흠... return을 스프링 메세지로 하고 싶은데... 컨트롤러에서 따로 idCheck를 호출해야하나... 흠...
+         * rest-api로 만들어야겠지,,,,,?.,,,,흠...
+         */
+        try {
+            //아이디 중복체크
+            if (memberDao.idCheck(param.getId()) == 1) {
+                throw new IllegalStateException(messageSource.getMessage("id.duplicate"));
+            }
+        } catch (Exception e) {
+            log.error("e.gerMessage() = {}", e.getMessage());
+            return 0;
         }
 
         //회원가입 시 필요한 메일키 넣어주기
