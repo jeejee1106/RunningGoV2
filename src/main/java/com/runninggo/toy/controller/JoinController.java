@@ -1,11 +1,9 @@
 package com.runninggo.toy.controller;
 
-import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.domain.MemberRequestDto;
+import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.service.MemberService;
 import com.runninggo.toy.validator.JoinCkValidator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.task.TaskRejectedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -33,7 +31,7 @@ public class JoinController {
     }
 
     @PostMapping("/joinCheck")
-    public String joinCheck(@Valid MemberRequestDto.JoinReqDto param, Errors errors, Model model) throws Exception{
+    public String joinCheck(@Valid JoinRequestDto.JoinReqDto param, Errors errors, Model model) throws Exception{
 
         //작성한 정보를 유지하고, joinSuccessForm에 name전송하기 위함.
         model.addAttribute("memberDto", param);
@@ -58,7 +56,7 @@ public class JoinController {
     }
 
     @GetMapping("/registerEmail")
-    public String emailConfirm(MemberRequestDto.UpdateMailAuthReqDto param)throws Exception{
+    public String emailConfirm(JoinRequestDto.UpdateMailAuthReqDto param)throws Exception{
 
         memberService.updateMailAuth(param);
 

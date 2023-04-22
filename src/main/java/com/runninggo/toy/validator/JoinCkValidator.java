@@ -1,13 +1,12 @@
 package com.runninggo.toy.validator;
 
-import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.domain.MemberRequestDto;
+import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.service.MemberService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 @Component
-public class JoinCkValidator extends AbstractValidator<MemberRequestDto.JoinReqDto>{
+public class JoinCkValidator extends AbstractValidator<JoinRequestDto.JoinReqDto>{
 
     private MemberService memberService;
 
@@ -16,7 +15,7 @@ public class JoinCkValidator extends AbstractValidator<MemberRequestDto.JoinReqD
     }
 
     @Override
-    protected void doValidate(MemberRequestDto.JoinReqDto param, Errors errors) {
+    protected void doValidate(JoinRequestDto.JoinReqDto param, Errors errors) {
         //아이디 중복 체크
         if (memberService.idCheck(param.getId()) == 1) {
             errors.rejectValue("id", "id.duplicate"); //필드, 에러코드

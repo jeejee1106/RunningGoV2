@@ -1,8 +1,8 @@
 package com.runninggo.toy.service;
 
 import com.runninggo.toy.dao.MemberDao;
+import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.domain.MemberRequestDto;
 import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
 import com.runninggo.toy.myinfo.MyInfo;
@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public int insertMember(MemberRequestDto.JoinReqDto param) throws Exception {
+    public int insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
         //회원가입 시 필요한 메일키 넣어주기
         param.InsertMailKey();
 
@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Async
     @Override
-    public void sendJoinCertificationMail(MemberRequestDto.JoinReqDto param) throws MessagingException, UnsupportedEncodingException {
+    public void sendJoinCertificationMail(JoinRequestDto.JoinReqDto param) throws MessagingException, UnsupportedEncodingException {
             //회원가입 완료하면 인증을 위한 이메일 발송
             MailHandler sendMail = new MailHandler(javaMailSender);
             sendMail.setSubject("[RunninGo 이메일 인증메일 입니다.]"); //메일제목
@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int updateMailAuth(MemberRequestDto.UpdateMailAuthReqDto param) throws Exception {
+    public int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
         return memberDao.updateMailAuth(param);
     }
 
