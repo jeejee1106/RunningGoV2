@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface MemberService {
     void sendJoinCertificationMail(JoinRequestDto.JoinReqDto param) throws MessagingException, UnsupportedEncodingException;
-    int insertMember(JoinRequestDto.JoinReqDto param) throws Exception;
+    CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception;
     CommonResponseDto<JoinResponseDto.IdCheckResDto> idCheck(String id);
     int login(MemberDto memberDto) throws Exception;
     int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception;

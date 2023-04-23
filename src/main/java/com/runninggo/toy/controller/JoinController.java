@@ -34,31 +34,16 @@ public class JoinController {
 //        binder.setValidator(joinCkValidator);
 //    }
 
+    @ResponseBody
     @PostMapping("/joinCheck")
-    public String joinCheck(@Valid JoinRequestDto.JoinReqDto param, Model model) throws Exception{
+    public CommonResponseDto joinCheck(@Valid JoinRequestDto.JoinReqDto param) throws Exception{
 
-        //작성한 정보를 유지하고, joinSuccessForm에 name전송하기 위함.
-        model.addAttribute("memberDto", param);
+        CommonResponseDto response = memberService.insertMember(param);
 
-        //만약 회원가입에 실패한다면
+        //인증메일 보내기
+        memberService.sendJoinCertificationMail(param);
 
-
-//        if (errors.hasErrors()) {
-//            //유효성 검사에 실패하면 작성중이던 폼 그대로 유지
-//            return "/member/joinForm";
-//        }
-
-        //유효성 검사를 통과하면 insert 후 페이지 이동
-        int result = memberService.insertMember(param);
-        if(result == 1){
-//            try { //예외처리 더 고민해보기.
-                memberService.sendJoinCertificationMail(param); //인증메일 보내기
-//            } catch (TaskRejectedException e) {
-//                log.info("TaskRejectedException 발생={}", e.getStackTrace());
-//            }
-            return "/member/joinSuccessForm";
-        }
-        return "/member/joinForm";
+        return response;
     }
 
     @GetMapping("/registerEmail")

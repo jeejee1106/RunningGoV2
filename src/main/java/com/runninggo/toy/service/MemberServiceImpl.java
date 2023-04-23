@@ -46,35 +46,34 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public int insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
+    public CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
 
-        /**
-         * try-catch를 안넣으면 화면에서 500에러 페이지로 넘어가고...
-         * 넣으면....흠... return을 스프링 메세지로 하고 싶은데... 컨트롤러에서 따로 idCheck를 호출해야하나... 흠...
-         * rest-api로 만들어야겠지,,,,,?.,,,,흠...
-         */
-        try {
-            //아이디 중복체크
-            if (memberDao.idCheck(param.getId()) == 1) {
-                throw new IllegalStateException(messageSource.getMessage("id.duplicate"));
-            }
-        } catch (Exception e) {
-            log.error("e.gerMessage() = {}", e.getMessage());
-            return 0;
+        //아이디 중복체크
+        CommonResponseDto<IdCheckResDto> idCheck = idCheck(param.getId());
+        if ("9999".equals(idCheck.getReturnCode())) {
+            throw new IllegalArgumentException(idCheck.getMessage());
+//            CommonResponseDto response = new CommonResponseDto();
+//            response.setReturnCode(idCheck.getReturnCode());
+//            response.setMessage(idCheck.getMessage());
+//            return response;
         }
-
-        //회원가입 시 필요한 메일키 넣어주기
-        param.InsertMailKey();
 
         //비밀번호를 암호화해서 넣어주기
         String encPassword = passwordEncoder.encode(param.getPass());
         param.setEncodePass(encPassword);
 
+        //회원가입 시 필요한 메일키 계산해서 param에 넣어주기
+        param.InsertMailKey();
         //회원가입
-        int result = memberDao.insertMember(param);
-        memberDao.updateMailKey(param);
+        memberDao.insertMember(param);
+        //회원가입 시 이메일 인증을 위한 메일키 db에 저장 - 위에서 param에 저장 후 insert하기 때문에 필요 없을 것 같음
+//        memberDao.updateMailKey(param);
 
-        return result;
+        CommonResponseDto response = new CommonResponseDto();
+        response.setReturnCode(messageSource.getMessage("success.code"));
+        response.setMessage(messageSource.getMessage("success"));
+
+        return response;
     }
 
     @Async
@@ -103,11 +102,11 @@ public class MemberServiceImpl implements MemberService{
         int count = memberDao.idCheck(id);
 
         if (count != 0) {
-            response.setReturnCode(messageSource.getMessage("fail"));
+            response.setReturnCode(messageSource.getMessage("fail.code"));
             response.setMessage(messageSource.getMessage("id.duplicate"));
         } else {
-            response.setReturnCode(messageSource.getMessage("success"));
-            response.setMessage(messageSource.getMessage("id.ok"));
+            response.setReturnCode(messageSource.getMessage("success.code"));
+            response.setMessage(messageSource.getMessage("id.success"));
         }
         response.setResult(new IdCheckResDto(count));
         return response;
