@@ -1,5 +1,6 @@
 package com.runninggo.toy.controller;
 
+import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.service.MemberService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.runninggo.toy.domain.JoinResponseDto.*;
 
 @Slf4j
 @Controller
@@ -69,7 +72,7 @@ public class JoinController {
     //id 중복 체크
     @ResponseBody
     @PostMapping("/idCheck")
-    public JoinResponseDto.IdCheckResDto idCheck(String id) {
+    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
         return memberService.idCheck(id);
     }
 

@@ -1,6 +1,7 @@
 package com.runninggo.toy.service;
 
 import com.runninggo.toy.dao.MemberDao;
+import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.MemberDto;
@@ -17,7 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.runninggo.toy.domain.JoinResponseDto.*;
 
 @Slf4j
 @Service
@@ -93,8 +98,10 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public JoinResponseDto.IdCheckResDto idCheck(String id) {
-        return new JoinResponseDto.IdCheckResDto(memberDao.idCheck(id));
+    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
+        CommonResponseDto dto = new CommonResponseDto();
+        dto.setResult(new IdCheckResDto(memberDao.idCheck(id)));
+        return dto;
     }
 
     @Override
