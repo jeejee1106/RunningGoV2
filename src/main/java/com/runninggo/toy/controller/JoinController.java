@@ -35,7 +35,7 @@ public class JoinController {
 //    }
 
     @ResponseBody
-    @PostMapping("/joinCheck")
+    @PostMapping("/join")
     public CommonResponseDto joinCheck(@Valid JoinRequestDto.JoinReqDto param) throws Exception{
 
         CommonResponseDto response = memberService.insertMember(param);

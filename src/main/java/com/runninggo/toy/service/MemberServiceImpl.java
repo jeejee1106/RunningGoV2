@@ -3,7 +3,6 @@ package com.runninggo.toy.service;
 import com.runninggo.toy.dao.MemberDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinRequestDto;
-import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.MemberDto;
 import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
@@ -18,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.runninggo.toy.domain.JoinResponseDto.*;
 
@@ -49,13 +46,9 @@ public class MemberServiceImpl implements MemberService{
     public CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
 
         //아이디 중복체크
-        CommonResponseDto<IdCheckResDto> idCheck = idCheck(param.getId());
+        CommonResponseDto idCheck = idCheck(param.getId());
         if ("9999".equals(idCheck.getReturnCode())) {
             throw new IllegalArgumentException(idCheck.getMessage());
-//            CommonResponseDto response = new CommonResponseDto();
-//            response.setReturnCode(idCheck.getReturnCode());
-//            response.setMessage(idCheck.getMessage());
-//            return response;
         }
 
         //비밀번호를 암호화해서 넣어주기
@@ -98,7 +91,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public CommonResponseDto<IdCheckResDto> idCheck(String id) {
-        CommonResponseDto response = new CommonResponseDto();
+        CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>();
         int count = memberDao.idCheck(id);
 
         if (count != 0) {
