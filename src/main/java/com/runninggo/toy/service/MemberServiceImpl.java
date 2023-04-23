@@ -2,6 +2,7 @@ package com.runninggo.toy.service;
 
 import com.runninggo.toy.dao.MemberDao;
 import com.runninggo.toy.domain.JoinRequestDto;
+import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.MemberDto;
 import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
@@ -92,8 +93,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int idCheck(String id) {
-        return memberDao.idCheck(id);
+    public JoinResponseDto.IdCheckResDto idCheck(String id) {
+        return new JoinResponseDto.IdCheckResDto(memberDao.idCheck(id));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.JoinRequestDto;
+import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.service.MemberService;
 import com.runninggo.toy.validator.JoinCkValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -68,7 +69,7 @@ public class JoinController {
     //id 중복 체크
     @ResponseBody
     @PostMapping("/idCheck")
-    public int idCheck(String id) {
+    public JoinResponseDto.IdCheckResDto idCheck(String id) {
         return memberService.idCheck(id);
     }
 

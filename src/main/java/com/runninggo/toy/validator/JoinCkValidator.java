@@ -17,9 +17,9 @@ public class JoinCkValidator extends AbstractValidator<JoinRequestDto.JoinReqDto
     @Override
     protected void doValidate(JoinRequestDto.JoinReqDto param, Errors errors) {
         //아이디 중복 체크
-        if (memberService.idCheck(param.getId()) == 1) {
-            errors.rejectValue("id", "id.duplicate"); //필드, 에러코드
-        }
+//        if (memberService.idCheck(param.getId()) == 1) {
+//            errors.rejectValue("id", "id.duplicate"); //필드, 에러코드
+//        }
 
         //비밀번호 일치하는지 체크
         if (!param.getPass().equals(param.getPassCheck())) {

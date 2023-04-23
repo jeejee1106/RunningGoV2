@@ -1,5 +1,6 @@
 package com.runninggo.toy.dao;
 
+import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.MemberDto;
 import com.runninggo.toy.domain.JoinRequestDto;
 import org.apache.ibatis.session.SqlSession;
