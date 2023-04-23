@@ -99,9 +99,18 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public CommonResponseDto<IdCheckResDto> idCheck(String id) {
-        CommonResponseDto dto = new CommonResponseDto();
-        dto.setResult(new IdCheckResDto(memberDao.idCheck(id)));
-        return dto;
+        CommonResponseDto response = new CommonResponseDto();
+        int count = memberDao.idCheck(id);
+
+        if (count != 0) {
+            response.setReturnCode(messageSource.getMessage("fail"));
+            response.setMessage(messageSource.getMessage("id.duplicate"));
+        } else {
+            response.setReturnCode(messageSource.getMessage("success"));
+            response.setMessage(messageSource.getMessage("id.ok"));
+        }
+        response.setResult(new IdCheckResDto(count));
+        return response;
     }
 
     @Override
