@@ -47,7 +47,8 @@ public class MemberServiceImpl implements MemberService{
 
         //아이디 중복체크
         CommonResponseDto idCheck = idCheck(param.getId());
-        if ("9999".equals(idCheck.getReturnCode())) {
+        //if문 더 생각해보기.. 이런식으로 하는게 맞을까? 더 좋은 방법이 안떠오른다.
+        if (messageSource.getMessage("fail.code").equals(idCheck.getReturnCode())) {
             throw new IllegalArgumentException(idCheck.getMessage());
         }
 
@@ -57,9 +58,12 @@ public class MemberServiceImpl implements MemberService{
 
         //회원가입 시 필요한 메일키 계산해서 param에 넣어주기
         param.InsertMailKey();
+
         //회원가입
         memberDao.insertMember(param);
-        //회원가입 시 이메일 인증을 위한 메일키 db에 저장 - 위에서 param에 저장 후 insert하기 때문에 필요 없을 것 같음
+
+        //회원가입 시 이메일 인증을 위한 메일키 db에 저장 - 위에서 param에 저장 후 insert하기 때문에 필요 없음.
+        //추후 기능 정리 끝나면 지우기
 //        memberDao.updateMailKey(param);
 
         CommonResponseDto response = new CommonResponseDto();

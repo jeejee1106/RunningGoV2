@@ -29,6 +29,7 @@ public class JoinController {
 //        this.joinCkValidator = joinCkValidator;
     }
 
+    //추후 기능 정리 끝나면 지우기
 //    @InitBinder
 //    public void validator(WebDataBinder binder) {
 //        binder.setValidator(joinCkValidator);

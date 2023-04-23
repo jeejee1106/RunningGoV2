@@ -9,9 +9,9 @@
     </select>
 
     <!-- member테이블에 insert하기 -->
-    <insert id="insertMember" parameterType="MemberDto">
-        insert into member(id, pass, name, email, hp, area, join_date)
-        values(#{id}, #{pass}, #{name}, #{email}, #{hp}, #{area}, now())
+    <insert id="insertMember" parameterType="JoinRequestDto">
+        insert into member(id, pass, name, email, hp, area, join_date, mail_key)
+        values(#{id}, #{pass}, #{name}, #{email}, #{hp}, #{area}, now(), #{mailKey})
     </insert>
 
     <!-- 로그인 시 id, pass 체크 -->
