@@ -13,7 +13,21 @@ public class CommonResponseDto<T> {
 
     private String returnCode;
     private String message;
-    private List<T> resultList;
     private T result;
+    private List<T> resultList;
 
+    public CommonResponseDto() {}
+
+    public CommonResponseDto(String returnCode, String message) {
+        this.returnCode = returnCode;
+        this.message = message;
+    }
+
+    public CommonResponseDto(T result) {
+        this.result = result;
+    }
+
+    public CommonResponseDto(List<T> resultList) {
+        this.resultList = resultList;
+    }
 }

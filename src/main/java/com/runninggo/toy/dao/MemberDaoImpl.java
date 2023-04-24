@@ -24,8 +24,15 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int idCheck(String id) {
-        return session.selectOne(namespace + "idCheck", id);
+    public boolean isDuplicateId(String id) {
+        int count = session.selectOne(namespace + "idCheck", id);
+        boolean isDuplicateId = true;
+
+        if (count == 0) {
+            isDuplicateId = false;
+        }
+
+        return isDuplicateId;
     }
 
     @Override

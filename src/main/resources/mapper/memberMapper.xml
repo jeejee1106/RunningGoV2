@@ -19,7 +19,7 @@
         select count(*) from member where id=#{id} and pass=#{pass}
     </select>
 
-    <!-- 회원가입 시 이메일 인증을 위한 랜덤번호 저장 -->
+    <!-- 회원가입 시 이메일 인증을 위한 랜덤번호 저장 : 리팩토링 후 사용하지 않음 230424-->
     <update id="updateMailKey" parameterType="MemberDto">
         update member set mail_key=#{mailKey} where email=#{email} and id=#{id}
     </update>

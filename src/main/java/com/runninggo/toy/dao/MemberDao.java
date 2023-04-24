@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MemberDao {
     int insertMember(JoinRequestDto.JoinReqDto param);
-    int idCheck(String id);
+    boolean isDuplicateId(String id);
     int login(MemberDto memberDto) throws Exception;
     int updateMailKey(JoinRequestDto.JoinReqDto param) throws Exception;
     int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception;

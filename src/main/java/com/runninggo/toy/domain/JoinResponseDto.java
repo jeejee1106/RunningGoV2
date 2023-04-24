@@ -5,14 +5,14 @@ import lombok.Getter;
 public class JoinResponseDto {
 
     public static class IdCheckResDto {
-        public IdCheckResDto(int count) {
-            this.count = count;
+        public IdCheckResDto(boolean isDuplicateId) {
+            this.isDuplicateId = isDuplicateId;
         }
 
-        private int count;
+        private boolean isDuplicateId;
 
-        public int getCount() {
-            return count;
+        public boolean getCount() {
+            return isDuplicateId;
         }
     }
 

@@ -25,11 +25,11 @@ import static com.runninggo.toy.domain.JoinResponseDto.*;
 @Service
 public class MemberServiceImpl implements MemberService{
 
-    MemberDao memberDao;
-    JavaMailSender javaMailSender;
-    BCryptPasswordEncoder passwordEncoder;
-    MyInfo myInfo;
-    MessageSourceAccessor messageSource;
+    private final MemberDao memberDao;
+    private final JavaMailSender javaMailSender;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final MyInfo myInfo;
+    private final MessageSourceAccessor messageSource;
 
     public MemberServiceImpl(MemberDao memberDao, JavaMailSender javaMailSender,
                              BCryptPasswordEncoder passwordEncoder, MyInfo myInfo,
@@ -41,15 +41,36 @@ public class MemberServiceImpl implements MemberService{
         this.messageSource = messageSource;
     }
 
+    public String messageSource(String messageCode) {
+        return messageSource.getMessage(messageCode);
+    }
+
+
+    public boolean isDuplicateId(String id) {
+        return memberDao.isDuplicateId(id);
+    }
+
+    @Override
+    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
+        CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>(messageSource("success.code"), messageSource("id.success"));
+        boolean isDuplicateId = isDuplicateId(id);
+
+        if (isDuplicateId) {
+            response.setReturnCode(messageSource("fail.code"));
+            response.setMessage(messageSource("id.duplicate"));
+        }
+
+        response.setResult(new IdCheckResDto(isDuplicateId));
+        return response;
+    }
+
     @Transactional
     @Override
     public CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
 
         //아이디 중복체크
-        CommonResponseDto idCheck = idCheck(param.getId());
-        //if문 더 생각해보기.. 이런식으로 하는게 맞을까? 더 좋은 방법이 안떠오른다.
-        if (messageSource.getMessage("fail.code").equals(idCheck.getReturnCode())) {
-            throw new IllegalArgumentException(idCheck.getMessage());
+        if (isDuplicateId(param.getId())) {
+            throw new IllegalArgumentException(messageSource("id.duplicate"));
         }
 
         //비밀번호를 암호화해서 넣어주기
@@ -62,13 +83,9 @@ public class MemberServiceImpl implements MemberService{
         //회원가입
         memberDao.insertMember(param);
 
-        //회원가입 시 이메일 인증을 위한 메일키 db에 저장 - 위에서 param에 저장 후 insert하기 때문에 필요 없음.
-        //추후 기능 정리 끝나면 지우기
-//        memberDao.updateMailKey(param);
-
         CommonResponseDto response = new CommonResponseDto();
-        response.setReturnCode(messageSource.getMessage("success.code"));
-        response.setMessage(messageSource.getMessage("success"));
+        response.setReturnCode(messageSource("success.code"));
+        response.setMessage(messageSource("success"));
 
         return response;
     }
@@ -91,22 +108,6 @@ public class MemberServiceImpl implements MemberService{
             sendMail.send();
 
             log.info("회원가입 인증 메일 발송 성공");
-    }
-
-    @Override
-    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
-        CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>();
-        int count = memberDao.idCheck(id);
-
-        if (count != 0) {
-            response.setReturnCode(messageSource.getMessage("fail.code"));
-            response.setMessage(messageSource.getMessage("id.duplicate"));
-        } else {
-            response.setReturnCode(messageSource.getMessage("success.code"));
-            response.setMessage(messageSource.getMessage("id.success"));
-        }
-        response.setResult(new IdCheckResDto(count));
-        return response;
     }
 
     @Override
