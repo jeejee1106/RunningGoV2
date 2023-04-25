@@ -21,21 +21,21 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandler(IllegalArgumentException e) {
-        log.error("[ExceptionHandler] BAD_REQUEST", e);
-        return new ErrorResult("BAD_REQUEST", e.getMessage());
+        log.error("[ExceptionHandler] BAD_REQUEST 발생", e);
+        return new ErrorResult("[400] BAD_REQUEST", e.getMessage());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String handle404(NoHandlerFoundException exception) {
-        log.error("404Exception 발생 : ", exception);
-        return "/error/custom404";
+    public ErrorResult handle404(NoHandlerFoundException e) {
+        log.error("[ExceptionHandler] NOT_FOUND 발생 : ", e);
+        return new ErrorResult("[404] NOT_FOUND", e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public String defaultExceptionHandler(Exception exception) {
-        log.error("Server Exception 발생 : ", exception);
-        return "/error/custom500";
+    public ErrorResult defaultExceptionHandler(Exception e) {
+        log.error("[ExceptionHandler] INTERNAL_SERVER_ERROR 발생 : ", e);
+        return new ErrorResult("[500] INTERNAL_SERVER_ERROR", e.getMessage());
     }
 }
