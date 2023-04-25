@@ -14,6 +14,10 @@ public class JoinRequestDto {
         @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")
         @NotNull(message = "필수입력 항목입니다.")
         private String id;
+
+        public idCheckReqDto(String id) {
+            this.id = id;
+        }
     }
 
     @Getter
