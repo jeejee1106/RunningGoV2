@@ -1,12 +1,12 @@
 package com.runninggo.toy.dao;
 
-import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.domain.JoinRequestDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.runninggo.toy.domain.JoinRequestDto.*;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -19,7 +19,7 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int insertMember(JoinRequestDto.JoinReqDto param) {
+    public int insertMember(JoinReqDto param) {
         return session.insert(namespace + "insertMember", param);
     }
 
@@ -41,12 +41,12 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int updateMailKey(JoinRequestDto.JoinReqDto param) throws Exception {
+    public int updateMailKey(JoinReqDto param) throws Exception {
         return session.update(namespace + "updateMailKey", param);
     }
 
     @Override
-    public int updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
+    public int updateMailAuthZeroToOne(UpdateMailAuthReqDto param) throws Exception {
         return session.update(namespace + "updateMailAuthZeroToOne", param);
     }
 

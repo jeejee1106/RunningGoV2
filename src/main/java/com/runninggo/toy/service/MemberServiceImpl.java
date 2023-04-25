@@ -2,7 +2,6 @@ package com.runninggo.toy.service;
 
 import com.runninggo.toy.dao.MemberDao;
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.domain.MemberDto;
 import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
@@ -20,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
+import static com.runninggo.toy.domain.JoinRequestDto.*;
 import static com.runninggo.toy.domain.JoinResponseDto.*;
 
 @Slf4j
@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public CommonResponseDto<IdCheckResDto> idCheck(JoinRequestDto.idCheckReqDto param) {
+    public CommonResponseDto<IdCheckResDto> idCheck(idCheckReqDto param) {
         CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(ID_SUCCESS));
         boolean isDuplicateId = isDuplicateId(param.getId());
 
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception {
+    public CommonResponseDto insertMember(JoinReqDto param) throws Exception {
 
         //아이디 중복체크
         if (isDuplicateId(param.getId())) {
@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Async
     @Override
-    public void sendJoinCertificationMail(JoinRequestDto.JoinReqDto param) throws MessagingException, UnsupportedEncodingException {
+    public void sendJoinCertificationMail(JoinReqDto param) throws MessagingException, UnsupportedEncodingException {
             //회원가입 완료하면 인증을 위한 이메일 발송
             MailHandler sendMail = new MailHandler(javaMailSender);
             sendMail.setSubject("[RunninGo 이메일 인증메일 입니다.]"); //메일제목
@@ -128,7 +128,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public CommonResponseDto updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
+    public CommonResponseDto updateMailAuthZeroToOne(UpdateMailAuthReqDto param) throws Exception {
         memberDao.updateMailAuthZeroToOne(param);
 
         CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
