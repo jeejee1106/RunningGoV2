@@ -1,4 +1,4 @@
-package com.runninggo.toy.service;
+package com.runninggo.toy.service.place;
 
 import com.runninggo.toy.domain.PlaceDto;
 

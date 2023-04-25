@@ -1,8 +1,8 @@
-package com.runninggo.toy.dao;
+package com.runninggo.toy.dao.place;
 
+import com.runninggo.toy.dao.place.PlaceDao;
 import com.runninggo.toy.domain.PlaceDto;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository

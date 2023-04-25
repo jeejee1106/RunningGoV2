@@ -1,7 +1,7 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.service.MemberService;
+import com.runninggo.toy.service.join.JoinService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,29 +15,29 @@ import static com.runninggo.toy.domain.JoinResponseDto.*;
 @RequestMapping("/join")
 public class JoinController {
 
-    private final MemberService memberService;
+    private final JoinService joinService;
 
-    public JoinController(MemberService memberService) {
-        this.memberService = memberService;
+    public JoinController(JoinService joinService) {
+        this.joinService = joinService;
     }
 
     //id 중복 체크
     @PostMapping("/id-check")
     public CommonResponseDto<IdCheckResDto> idCheck(@Valid idCheckReqDto param) {
-        return memberService.idCheck(param);
+        return joinService.idCheck(param);
     }
 
-    @PostMapping("/join")
+    @PostMapping()
     public CommonResponseDto joinCheck(@Valid JoinReqDto param) throws Exception{
-        CommonResponseDto response = memberService.insertMember(param);
+        CommonResponseDto response = joinService.insertMember(param);
         //인증메일 보내기
-        memberService.sendJoinCertificationMail(param);
+        joinService.sendJoinCertificationMail(param);
         return response;
     }
 
     @PutMapping("/mail-auth")
-    public CommonResponseDto updateMailAuthZeroToOne(UpdateMailAuthReqDto param)throws Exception{
-        return memberService.updateMailAuthZeroToOne(param);
+    public CommonResponseDto updateMailAuthZeroToOne(@Valid UpdateMailAuthReqDto param)throws Exception{
+        return joinService.updateMailAuthZeroToOne(param);
     }
 
 }

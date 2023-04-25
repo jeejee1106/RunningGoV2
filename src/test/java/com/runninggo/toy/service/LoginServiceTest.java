@@ -1,6 +1,7 @@
 package com.runninggo.toy.service;
 
 import com.runninggo.toy.domain.MemberDto;
+import com.runninggo.toy.service.login.LoginService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LoginServiceTest {
 
     @Autowired
-    MemberService memberService;
+    LoginService loginService;
 
     public MemberDto loginMemberDto(String id, String pass) {
         MemberDto memberDto = new MemberDto();
@@ -41,7 +42,7 @@ public class LoginServiceTest {
 
         System.out.println("memberDto = " + memberDto);
 
-        int result = memberService.login(memberDto);
+        int result = loginService.login(memberDto);
         System.out.println("result = " + result);
 
         assertTrue(result==1);
@@ -54,7 +55,7 @@ public class LoginServiceTest {
 
         System.out.println("memberDto = " + memberDto);
 
-        int result = memberService.login(memberDto);
+        int result = loginService.login(memberDto);
         System.out.println("result = " + result);
 
         assertTrue(result!=1);
@@ -67,7 +68,7 @@ public class LoginServiceTest {
 
         System.out.println("memberDto = " + memberDto);
 
-        int result = memberService.login(memberDto);
+        int result = loginService.login(memberDto);
         System.out.println("result = " + result);
 
         assertTrue(result!=1);
@@ -80,7 +81,7 @@ public class LoginServiceTest {
 
         System.out.println("memberDto = " + memberDto);
 
-        int result = memberService.login(memberDto);
+        int result = loginService.login(memberDto);
         System.out.println("result = " + result);
 
         assertTrue(result!=1);
@@ -90,7 +91,7 @@ public class LoginServiceTest {
     @DisplayName("아이디찾기성공")
     void findIdSuccessTest() throws Exception {
         MemberDto memberDto = findIdMemberDto("지지", "kimmj1106@naver.com", "010-1111-1111");
-        List<MemberDto> list = memberService.findId(memberDto);
+        List<MemberDto> list = loginService.findId(memberDto);
 
         System.out.println("list = " + list.size());
         assertTrue(list.size()!=1);
@@ -100,7 +101,7 @@ public class LoginServiceTest {
     @DisplayName("아이디찾기실패")
     void findIdFailTest() throws Exception{
         MemberDto memberDto = findIdMemberDto("test", "kimmj1106@naver.com", "010-1111-1111");
-        List<MemberDto> list = memberService.findId(memberDto);
+        List<MemberDto> list = loginService.findId(memberDto);
 
         System.out.println("list = " + list.size());
         assertTrue(list.size()==0);

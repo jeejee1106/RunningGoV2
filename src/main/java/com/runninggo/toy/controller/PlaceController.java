@@ -1,7 +1,7 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.PlaceDto;
-import com.runninggo.toy.service.PlaceService;
+import com.runninggo.toy.service.place.PlaceService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.runninggo.toy.dao;
+package com.runninggo.toy.dao.login;
 
 import com.runninggo.toy.domain.MemberDto;
 import org.apache.ibatis.session.SqlSession;
@@ -9,31 +9,15 @@ import java.util.List;
 import static com.runninggo.toy.domain.JoinRequestDto.*;
 
 @Repository
-public class MemberDaoImpl implements MemberDao{
+public class LoginDaoImpl implements LoginDao {
 
     private SqlSession session;
     private static String namespace = "com.runninggo.toy.dao.MemberMapper.";
 
-    public MemberDaoImpl(SqlSession session) {
+    public LoginDaoImpl(SqlSession session) {
         this.session = session;
     }
 
-    @Override
-    public int insertMember(JoinReqDto param) {
-        return session.insert(namespace + "insertMember", param);
-    }
-
-    @Override
-    public boolean isDuplicateId(String id) {
-        int count = session.selectOne(namespace + "idCheck", id);
-        boolean isDuplicateId = true;
-
-        if (count == 0) {
-            isDuplicateId = false;
-        }
-
-        return isDuplicateId;
-    }
 
     @Override
     public int login(MemberDto memberDto) throws Exception{
@@ -43,11 +27,6 @@ public class MemberDaoImpl implements MemberDao{
     @Override
     public int updateMailKey(JoinReqDto param) throws Exception {
         return session.update(namespace + "updateMailKey", param);
-    }
-
-    @Override
-    public int updateMailAuthZeroToOne(UpdateMailAuthReqDto param) throws Exception {
-        return session.update(namespace + "updateMailAuthZeroToOne", param);
     }
 
     @Override

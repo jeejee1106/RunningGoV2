@@ -1,10 +1,8 @@
-package com.runninggo.toy.service;
+package com.runninggo.toy.service.join;
 
-import com.runninggo.toy.dao.MemberDao;
+import com.runninggo.toy.dao.join.JoinDao;
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.domain.MemberDto;
 import com.runninggo.toy.mail.MailHandler;
-import com.runninggo.toy.mail.TempKey;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -16,26 +14,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
 import static com.runninggo.toy.domain.JoinRequestDto.*;
-import static com.runninggo.toy.domain.JoinResponseDto.*;
+import static com.runninggo.toy.domain.JoinResponseDto.IdCheckResDto;
 
 @Slf4j
 @Service
-public class MemberServiceImpl implements MemberService{
+public class JoinServiceImpl implements JoinService {
 
-    private final MemberDao memberDao;
+    private final JoinDao joinDao;
     private final JavaMailSender javaMailSender;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MyInfo myInfo;
     private final MessageSourceAccessor messageSource;
 
-    public MemberServiceImpl(MemberDao memberDao, JavaMailSender javaMailSender,
-                             BCryptPasswordEncoder passwordEncoder, MyInfo myInfo,
-                             MessageSourceAccessor messageSource) {
-        this.memberDao = memberDao;
+    public JoinServiceImpl(JoinDao joinDao, JavaMailSender javaMailSender,
+                           BCryptPasswordEncoder passwordEncoder, MyInfo myInfo,
+                           MessageSourceAccessor messageSource) {
+        this.joinDao = joinDao;
         this.javaMailSender = javaMailSender;
         this.passwordEncoder = passwordEncoder;
         this.myInfo = myInfo;
@@ -47,7 +44,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     public boolean isDuplicateId(String id) {
-        return memberDao.isDuplicateId(id);
+        return joinDao.isDuplicateId(id);
     }
 
     @Override
@@ -81,7 +78,7 @@ public class MemberServiceImpl implements MemberService{
         param.InsertMailKey();
 
         //회원가입
-        memberDao.insertMember(param);
+        joinDao.insertMember(param);
 
         CommonResponseDto response = new CommonResponseDto();
         response.setReturnCode(messageSource(SUCCESS_CODE));
@@ -111,74 +108,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int login(MemberDto memberDto) throws Exception{
-
-        String rawPassword = memberDto.getPass();
-        String encodedPassword = memberDao.getEncPass(memberDto.getId());
-
-        //입력받은 비밀번호와 암호화된 비밀번호를 비교(matches)해서 같지 않으면 0반환
-        if(!passwordEncoder.matches(rawPassword, encodedPassword)) {
-            return 0;
-        } else{
-            //같으면 memberDto.setPass()에 암호화된 비밀번호 넣어주어 입력한 비밀번호가 암호화된 비번과 같게 처리.
-            memberDto.setPass(encodedPassword);
-            return memberDao.login(memberDto);
-        }
-    }
-
-    @Override
     @Transactional
     public CommonResponseDto updateMailAuthZeroToOne(UpdateMailAuthReqDto param) throws Exception {
-        memberDao.updateMailAuthZeroToOne(param);
+        joinDao.updateMailAuthZeroToOne(param);
 
         CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
 
         return response;
     }
-
-    @Override
-    public int emailAuthFail(String id) throws Exception {
-        return memberDao.emailAuthFail(id);
-    }
-
-    @Override
-    public List<MemberDto> findId(MemberDto memberDto) throws Exception {
-        return memberDao.findId(memberDto);
-    }
-
-    @Async
-    @Transactional
-    @Override
-    public void findPass(MemberDto memberDto) throws Exception {
-        log.info("MemberServiceImpl.findPass >>>>>>>>>>");
-
-        if (getFindUserResult(memberDto) == 1) {
-            //랜덤문자열 생성
-            String pass = new TempKey().getKey(15,false);
-
-            //위 문자열(비밀번호)을 암호화해서 넣어주기
-            String encPassword = passwordEncoder.encode(pass);
-
-            memberDto.setPass(encPassword);
-            memberDao.updateRandomPass(memberDto);
-
-            MailHandler sendMail = new MailHandler(javaMailSender);
-            sendMail.setSubject("[RunninGo 임시비밀번호 입니다.]"); //메일제목
-            sendMail.setText(
-                    "<h1>RunninGo 임시비밀번호</h1>" +
-                            "<br>회원님의 임시비밀번호입니다."+
-                            "<br><b>" + pass + "</b>"+
-                            "<br>로그인 후 반드시 비밀번호를 변경해주세요!!");
-            sendMail.setFrom(myInfo.runningGoId, "러닝고");
-            sendMail.setTo(memberDto.getEmail());
-            sendMail.send();
-            log.info("비밀번호 찾기 메일 발송 성공");
-        }
-    }
-
-    @Override
-    public int getFindUserResult(MemberDto memberDto) throws Exception {
-        return memberDao.getFindUserResult(memberDto);
-    }
-
 }

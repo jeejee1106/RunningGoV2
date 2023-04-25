@@ -1,6 +1,6 @@
-package com.runninggo.toy.service;
+package com.runninggo.toy.service.place;
 
-import com.runninggo.toy.dao.PlaceDao;
+import com.runninggo.toy.dao.place.PlaceDao;
 import com.runninggo.toy.domain.PlaceDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;

@@ -1,17 +1,17 @@
 package com.runninggo.toy.validator;
 
 import com.runninggo.toy.domain.JoinRequestDto;
-import com.runninggo.toy.service.MemberService;
+import com.runninggo.toy.service.join.JoinService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 @Component
 public class JoinCkValidator extends AbstractValidator<JoinRequestDto.JoinReqDto>{
 
-    private MemberService memberService;
+    private JoinService joinService;
 
-    public JoinCkValidator(MemberService memberService) {
-        this.memberService = memberService;
+    public JoinCkValidator(JoinService joinService) {
+        this.joinService = joinService;
     }
 
     @Override

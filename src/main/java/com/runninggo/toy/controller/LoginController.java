@@ -1,7 +1,7 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.service.MemberService;
+import com.runninggo.toy.service.login.LoginService;
 import com.runninggo.toy.validator.LoginCheckValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,11 +21,11 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController {
 
-    MemberService memberService;
+    LoginService loginService;
     LoginCheckValidator loginCheckValidator;
 
-    public LoginController(MemberService memberService, LoginCheckValidator loginCheckValidator) {
-        this.memberService = memberService;
+    public LoginController(LoginService loginService, LoginCheckValidator loginCheckValidator) {
+        this.loginService = loginService;
         this.loginCheckValidator = loginCheckValidator;
     }
 
@@ -43,7 +43,7 @@ public class LoginController {
         }
 
         //이메일 인증 했는지 확인
-        if (memberService.emailAuthFail(memberDto.getId()) != 1) {
+        if (loginService.emailAuthFail(memberDto.getId()) != 1) {
             return "/member/emailAuthFail";
         }
 
@@ -69,18 +69,18 @@ public class LoginController {
 
     @PostMapping("/findId")
     public String findId(MemberDto memberDto, Model model) throws Exception{
-        List<MemberDto> idList = memberService.findId(memberDto);
+        List<MemberDto> idList = loginService.findId(memberDto);
         model.addAttribute("idList", idList);
         return "/member/findIdResult";
     }
 
     @PostMapping("/findPass")
     public String findPass(MemberDto memberDto, Model model) throws Exception {
-        int count = memberService.getFindUserResult(memberDto);
+        int count = loginService.getFindUserResult(memberDto);
         log.info("LoginController.findPass : count={}", count);
         model.addAttribute("count", count);
 
-        memberService.findPass(memberDto);
+        loginService.findPass(memberDto);
         return "/member/findPassResult";
     }
 }
