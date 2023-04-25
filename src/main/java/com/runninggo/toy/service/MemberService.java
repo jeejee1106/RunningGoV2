@@ -12,7 +12,7 @@ import java.util.List;
 public interface MemberService {
     void sendJoinCertificationMail(JoinRequestDto.JoinReqDto param) throws MessagingException, UnsupportedEncodingException;
     CommonResponseDto insertMember(JoinRequestDto.JoinReqDto param) throws Exception;
-    CommonResponseDto<JoinResponseDto.IdCheckResDto> idCheck(String id);
+    CommonResponseDto<JoinResponseDto.IdCheckResDto> idCheck(JoinRequestDto.idCheckReqDto param);
     int login(MemberDto memberDto) throws Exception;
     int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception;
     int emailAuthFail(String id) throws Exception;

@@ -5,6 +5,7 @@ import com.runninggo.toy.domain.JoinRequestDto;
 import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.service.MemberService;
 import com.runninggo.toy.validator.JoinCkValidator;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import static com.runninggo.toy.domain.JoinResponseDto.*;
 
@@ -58,8 +62,8 @@ public class JoinController {
     //id 중복 체크
     @ResponseBody
     @PostMapping("/idCheck")
-    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
-        return memberService.idCheck(id);
+    public CommonResponseDto<IdCheckResDto> idCheck(@Valid JoinRequestDto.idCheckReqDto param) {
+        return memberService.idCheck(param);
     }
 
 }

@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 public class JoinRequestDto {
 
     @Getter
+    public static class idCheckReqDto{
+        @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")
+        @NotNull(message = "필수입력 항목입니다.")
+        private String id;
+    }
+
+    @Getter
     public static class JoinReqDto {
 
         @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")

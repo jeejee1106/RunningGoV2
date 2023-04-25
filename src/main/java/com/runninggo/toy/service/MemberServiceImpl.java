@@ -1,6 +1,5 @@
 package com.runninggo.toy.service;
 
-import com.runninggo.toy.constant.MessageConstant;
 import com.runninggo.toy.dao.MemberDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinRequestDto;
@@ -52,9 +51,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public CommonResponseDto<IdCheckResDto> idCheck(String id) {
+    public CommonResponseDto<IdCheckResDto> idCheck(JoinRequestDto.idCheckReqDto param) {
         CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(ID_SUCCESS));
-        boolean isDuplicateId = isDuplicateId(id);
+        boolean isDuplicateId = isDuplicateId(param.getId());
 
         if (isDuplicateId) {
             response.setReturnCode(messageSource(FAIL_CODE));
