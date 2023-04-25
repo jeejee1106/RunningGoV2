@@ -10,7 +10,7 @@ public interface MemberDao {
     boolean isDuplicateId(String id);
     int login(MemberDto memberDto) throws Exception;
     int updateMailKey(JoinRequestDto.JoinReqDto param) throws Exception;
-    int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception;
+    int updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception;
     int emailAuthFail(String id) throws Exception;
     List<MemberDto> findId(MemberDto memberDto) throws Exception;
     int getFindUserResult(MemberDto memberDto) throws Exception;

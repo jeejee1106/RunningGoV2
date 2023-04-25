@@ -46,8 +46,8 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
-        return session.update(namespace + "updateMailAuth", param);
+    public int updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
+        return session.update(namespace + "updateMailAuthZeroToOne", param);
     }
 
     @Override

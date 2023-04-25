@@ -127,8 +127,13 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int updateMailAuth(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
-        return memberDao.updateMailAuth(param);
+    @Transactional
+    public CommonResponseDto updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param) throws Exception {
+        memberDao.updateMailAuthZeroToOne(param);
+
+        CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+
+        return response;
     }
 
     @Override

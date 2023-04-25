@@ -51,17 +51,16 @@ public class JoinController {
         return response;
     }
 
-    @GetMapping("/registerEmail")
-    public String emailConfirm(JoinRequestDto.UpdateMailAuthReqDto param)throws Exception{
-
-        memberService.updateMailAuth(param);
-
-        return "/member/emailAuthSuccess";
+    @ResponseBody
+    @PutMapping("/mail-auth")
+    public CommonResponseDto updateMailAuthZeroToOne(JoinRequestDto.UpdateMailAuthReqDto param)throws Exception{
+        CommonResponseDto response = memberService.updateMailAuthZeroToOne(param);
+        return response;
     }
 
     //id 중복 체크
     @ResponseBody
-    @PostMapping("/idCheck")
+    @PostMapping("/id-check")
     public CommonResponseDto<IdCheckResDto> idCheck(@Valid JoinRequestDto.idCheckReqDto param) {
         return memberService.idCheck(param);
     }
