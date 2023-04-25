@@ -1,5 +1,6 @@
 package com.runninggo.toy.service;
 
+import com.runninggo.toy.constant.MessageConstant;
 import com.runninggo.toy.dao.MemberDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinRequestDto;
@@ -19,6 +20,7 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import static com.runninggo.toy.constant.MessageConstant.*;
 import static com.runninggo.toy.domain.JoinResponseDto.*;
 
 @Slf4j
@@ -45,19 +47,18 @@ public class MemberServiceImpl implements MemberService{
         return messageSource.getMessage(messageCode);
     }
 
-
     public boolean isDuplicateId(String id) {
         return memberDao.isDuplicateId(id);
     }
 
     @Override
     public CommonResponseDto<IdCheckResDto> idCheck(String id) {
-        CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>(messageSource("success.code"), messageSource("id.success"));
+        CommonResponseDto<IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(ID_SUCCESS));
         boolean isDuplicateId = isDuplicateId(id);
 
         if (isDuplicateId) {
-            response.setReturnCode(messageSource("fail.code"));
-            response.setMessage(messageSource("id.duplicate"));
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(ID_DUPLICATE));
         }
 
         response.setResult(new IdCheckResDto(isDuplicateId));
@@ -70,7 +71,7 @@ public class MemberServiceImpl implements MemberService{
 
         //아이디 중복체크
         if (isDuplicateId(param.getId())) {
-            throw new IllegalArgumentException(messageSource("id.duplicate"));
+            throw new IllegalArgumentException(messageSource(ID_DUPLICATE));
         }
 
         //비밀번호를 암호화해서 넣어주기
@@ -84,8 +85,8 @@ public class MemberServiceImpl implements MemberService{
         memberDao.insertMember(param);
 
         CommonResponseDto response = new CommonResponseDto();
-        response.setReturnCode(messageSource("success.code"));
-        response.setMessage(messageSource("success"));
+        response.setReturnCode(messageSource(SUCCESS_CODE));
+        response.setMessage(messageSource(SUCCESS));
 
         return response;
     }
