@@ -29,4 +29,23 @@ public class LoginRequestDto {
         }
     }
 
+    @Getter
+    public static class FindIdReqDto {
+
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String name;
+
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String email;
+
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String hp;
+
+        public FindIdReqDto(String name, String email, String hp) {
+            this.name = name;
+            this.email = email;
+            this.hp = hp;
+        }
+    }
+
 }

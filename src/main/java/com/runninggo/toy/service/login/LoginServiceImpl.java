@@ -4,6 +4,7 @@ import com.runninggo.toy.dao.login.LoginDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.LoginRequestDto;
+import com.runninggo.toy.domain.LoginResponseDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
 
@@ -95,11 +98,14 @@ public class LoginServiceImpl implements LoginService {
         return new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
     }
 
-//    @Override
-//    public List<MemberDto> findId(MemberDto memberDto) throws Exception {
-//        return loginDao.findId(memberDto);
-//    }
-//
+    @Override
+    public CommonResponseDto findId(LoginRequestDto.FindIdReqDto param) throws Exception {
+        CommonResponseDto<LoginResponseDto.FindIdResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        List<LoginResponseDto.FindIdResDto> list = loginDao.findId(param);
+        response.setResultList(list);
+        return response;
+    }
+
 //    @Async
 //    @Transactional
 //    @Override

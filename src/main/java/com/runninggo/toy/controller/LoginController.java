@@ -6,6 +6,7 @@ import com.runninggo.toy.domain.LoginRequestDto;
 import com.runninggo.toy.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.FAIL_CODE;
 
@@ -46,13 +49,12 @@ public class LoginController {
     public CommonResponseDto logout(HttpSession session) throws Exception {
         return loginService.logout(session);
     }
-//
-//    @PostMapping("/findId")
-//    public String findId(MemberDto memberDto, Model model) throws Exception{
-//        List<MemberDto> idList = loginService.findId(memberDto);
-//        model.addAttribute("idList", idList);
-//        return "/member/findIdResult";
-//    }
+
+    @ResponseBody
+    @PostMapping("/findId")
+    public CommonResponseDto findId(LoginRequestDto.FindIdReqDto param) throws Exception{
+        return loginService.findId(param);
+    }
 //
 //    @PostMapping("/findPass")
 //    public String findPass(MemberDto memberDto, Model model) throws Exception {
