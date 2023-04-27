@@ -1,9 +1,6 @@
 package com.runninggo.toy.service;
 
-import com.runninggo.toy.domain.MemberDto;
-import com.runninggo.toy.service.join.JoinService;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -11,19 +8,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**.xml"})
 public class JoinServiceTest {
 
-    @Autowired
-    JoinService joinService;
-
-    public MemberDto joinMemberDto(String id, String pass, String name, String email, String hp, String area) {
-        MemberDto memberDto = new MemberDto();
-        memberDto.setId(id);
-        memberDto.setPass(pass);
-        memberDto.setName(name);
-        memberDto.setEmail(email);
-        memberDto.setHp(hp);
-        memberDto.setArea(area);
-        return memberDto;
-    }
+//    @Autowired
+//    JoinService joinService;
+//
+//    public MemberDto joinMemberDto(String id, String pass, String name, String email, String hp, String area) {
+//        MemberDto memberDto = new MemberDto();
+//        memberDto.setId(id);
+//        memberDto.setPass(pass);
+//        memberDto.setName(name);
+//        memberDto.setEmail(email);
+//        memberDto.setHp(hp);
+//        memberDto.setArea(area);
+//        return memberDto;
+//    }
 
 //    @Test
 //    @DisplayName("회원가입성공")

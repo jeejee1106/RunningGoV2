@@ -1,12 +1,8 @@
 package com.runninggo.toy.dao.login;
 
-import com.runninggo.toy.domain.MemberDto;
+import com.runninggo.toy.domain.LoginRequestDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import static com.runninggo.toy.domain.JoinRequestDto.*;
 
 @Repository
 public class LoginDaoImpl implements LoginDao {
@@ -20,13 +16,8 @@ public class LoginDaoImpl implements LoginDao {
 
 
     @Override
-    public int login(MemberDto memberDto) throws Exception{
-        return session.selectOne(namespace + "login", memberDto);
-    }
-
-    @Override
-    public int updateMailKey(JoinReqDto param) throws Exception {
-        return session.update(namespace + "updateMailKey", param);
+    public int login(LoginRequestDto.LoginReqDto param) throws Exception{
+        return session.selectOne(namespace + "login", param);
     }
 
     @Override
@@ -34,21 +25,21 @@ public class LoginDaoImpl implements LoginDao {
         return session.selectOne(namespace + "emailAuthFail", id);
     }
 
-    @Override
-    public List<MemberDto> findId(MemberDto memberDto) throws Exception {
-        return session.selectList(namespace + "findId", memberDto);
-    }
-
-    @Override
-    public int getFindUserResult(MemberDto memberDto) throws Exception {
-        return session.selectOne(namespace + "getFindUserResult", memberDto);
-    }
-
-    @Override
-    public int updateRandomPass(MemberDto memberDto) throws Exception {
-        return session.update(namespace + "updateRandomPass", memberDto);
-    }
-
+//    @Override
+//    public List<MemberDto> findId(MemberDto memberDto) throws Exception {
+//        return session.selectList(namespace + "findId", memberDto);
+//    }
+//
+//    @Override
+//    public int getFindUserResult(MemberDto memberDto) throws Exception {
+//        return session.selectOne(namespace + "getFindUserResult", memberDto);
+//    }
+//
+//    @Override
+//    public int updateRandomPass(MemberDto memberDto) throws Exception {
+//        return session.update(namespace + "updateRandomPass", memberDto);
+//    }
+//
     @Override
     public String getEncPass(String id) throws Exception {
         return session.selectOne(namespace + "getEncPass", id);

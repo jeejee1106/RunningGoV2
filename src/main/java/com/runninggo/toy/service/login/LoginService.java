@@ -1,13 +1,16 @@
 package com.runninggo.toy.service.login;
 
-import com.runninggo.toy.domain.MemberDto;
+import com.runninggo.toy.domain.CommonResponseDto;
+import com.runninggo.toy.domain.LoginRequestDto;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public interface LoginService {
-    int login(MemberDto memberDto) throws Exception;
+    CommonResponseDto login(LoginRequestDto.LoginReqDto param, boolean saveId,
+                            HttpServletResponse httpServletResponse, HttpSession session) throws Exception;
     int emailAuthFail(String id) throws Exception;
-    List<MemberDto> findId(MemberDto memberDto) throws Exception;
-    void findPass(MemberDto memberDto) throws Exception;
-    int getFindUserResult(MemberDto memberDto) throws Exception;
+//    List<MemberDto> findId(MemberDto memberDto) throws Exception;
+//    void findPass(MemberDto memberDto) throws Exception;
+//    int getFindUserResult(MemberDto memberDto) throws Exception;
 }
