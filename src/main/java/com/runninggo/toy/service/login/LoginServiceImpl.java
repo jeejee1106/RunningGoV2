@@ -60,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
         loginDao.login(param);
 
         //이메일 인증 했는지 확인
-        if (loginDao.emailAuthFail(param.getId()) != 1) {
+        if (!emailAuthFail(param.getId())) {
             response.setMessage(messageSource(LOGIN_EMAIL_AUTH_FAIL));
             return response;
         }
@@ -85,8 +85,14 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public int emailAuthFail(String id) throws Exception {
+    public boolean emailAuthFail(String id) throws Exception {
         return loginDao.emailAuthFail(id);
+    }
+
+    @Override
+    public CommonResponseDto logout(HttpSession session) throws Exception{
+        session.invalidate(); //세션 종료
+        return new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
     }
 
 //    @Override

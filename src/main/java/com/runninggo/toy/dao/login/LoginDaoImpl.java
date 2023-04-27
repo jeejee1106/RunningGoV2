@@ -21,8 +21,15 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public int emailAuthFail(String id) throws Exception {
-        return session.selectOne(namespace + "emailAuthFail", id);
+    public boolean emailAuthFail(String id) throws Exception {
+        boolean emailAuthCheck = true;
+        int count = session.selectOne(namespace + "emailAuthFail", id);
+
+        if (count == 0) {
+            emailAuthCheck = false;
+        }
+
+        return emailAuthCheck;
     }
 
 //    @Override

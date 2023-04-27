@@ -1,6 +1,7 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.CommonResponseDto;
+import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.LoginRequestDto;
 import com.runninggo.toy.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import static com.runninggo.toy.constant.MessageConstant.FAIL_CODE;
 
 @Slf4j
 @Controller
@@ -32,17 +35,17 @@ public class LoginController {
 //    }
 
     @ResponseBody
-    @PostMapping("/login")
+    @PostMapping()
     public CommonResponseDto login(@Valid LoginRequestDto.LoginReqDto param, boolean saveId,
                                    HttpServletResponse httpServletResponse, HttpSession session) throws Exception {
         return loginService.login(param, saveId, httpServletResponse, session);
     }
 
-//    @GetMapping("/logout")
-//    public String logout(HttpSession session) {
-//        session.invalidate(); //세션 종료
-//        return "redirect:/";
-//    }
+    @ResponseBody
+    @GetMapping("/logout")
+    public CommonResponseDto logout(HttpSession session) throws Exception {
+        return loginService.logout(session);
+    }
 //
 //    @PostMapping("/findId")
 //    public String findId(MemberDto memberDto, Model model) throws Exception{

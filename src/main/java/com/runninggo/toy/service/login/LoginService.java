@@ -9,7 +9,8 @@ import javax.servlet.http.HttpSession;
 public interface LoginService {
     CommonResponseDto login(LoginRequestDto.LoginReqDto param, boolean saveId,
                             HttpServletResponse httpServletResponse, HttpSession session) throws Exception;
-    int emailAuthFail(String id) throws Exception;
+    boolean emailAuthFail(String id) throws Exception;
+    CommonResponseDto logout(HttpSession session) throws Exception;
 //    List<MemberDto> findId(MemberDto memberDto) throws Exception;
 //    void findPass(MemberDto memberDto) throws Exception;
 //    int getFindUserResult(MemberDto memberDto) throws Exception;
