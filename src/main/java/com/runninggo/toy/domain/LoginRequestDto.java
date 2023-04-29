@@ -48,4 +48,29 @@ public class LoginRequestDto {
         }
     }
 
+    @Getter
+    public static class FindPassReqDto {
+
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String id;
+
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String email;
+
+        private String pass;
+
+        private void setPass(String pass) {
+            this.pass = pass;
+        }
+
+        public void setRandomEncPass(String encPassword) {
+            setPass(encPassword);
+        }
+
+        public FindPassReqDto(String id, String email) {
+            this.id = id;
+            this.email = email;
+        }
+    }
+
 }

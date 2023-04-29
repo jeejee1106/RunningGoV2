@@ -39,8 +39,8 @@
         select id, join_date from member where name=#{name} and email=#{email} and hp=#{hp}
     </select>
 
-    <!-- 비밀번호 찾기 -->
-    <select id="getFindUserResult" parameterType="LoginRequestDto" resultType="int">
+    <!-- 비밀번호 찾기 시 member가 맞는지 확인-->
+    <select id="hasMember" parameterType="LoginRequestDto" resultType="int">
         select count(*) from member where id=#{id} and email=#{email}
     </select>
 

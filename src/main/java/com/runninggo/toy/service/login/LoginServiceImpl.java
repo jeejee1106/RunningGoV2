@@ -5,12 +5,16 @@ import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.domain.JoinResponseDto;
 import com.runninggo.toy.domain.LoginRequestDto;
 import com.runninggo.toy.domain.LoginResponseDto;
+import com.runninggo.toy.mail.MailHandler;
+import com.runninggo.toy.mail.TempKey;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -107,38 +111,44 @@ public class LoginServiceImpl implements LoginService {
     }
 
 //    @Async
-//    @Transactional
-//    @Override
-//    public void findPass(MemberDto memberDto) throws Exception {
-//        log.info("MemberServiceImpl.findPass >>>>>>>>>>");
-//
-//        if (getFindUserResult(memberDto) == 1) {
-//            //랜덤문자열 생성
-//            String pass = new TempKey().getKey(15,false);
-//
-//            //위 문자열(비밀번호)을 암호화해서 넣어주기
-//            String encPassword = passwordEncoder.encode(pass);
-//
-//            memberDto.setPass(encPassword);
-//            loginDao.updateRandomPass(memberDto);
-//
-//            MailHandler sendMail = new MailHandler(javaMailSender);
-//            sendMail.setSubject("[RunninGo 임시비밀번호 입니다.]"); //메일제목
-//            sendMail.setText(
-//                    "<h1>RunninGo 임시비밀번호</h1>" +
-//                            "<br>회원님의 임시비밀번호입니다."+
-//                            "<br><b>" + pass + "</b>"+
-//                            "<br>로그인 후 반드시 비밀번호를 변경해주세요!!");
-//            sendMail.setFrom(myInfo.runningGoId, "러닝고");
-//            sendMail.setTo(memberDto.getEmail());
-//            sendMail.send();
-//            log.info("비밀번호 찾기 메일 발송 성공");
-//        }
-//    }
-//
-//    @Override
-//    public int getFindUserResult(MemberDto memberDto) throws Exception {
-//        return loginDao.getFindUserResult(memberDto);
-//    }
+    @Transactional
+    @Override
+    public CommonResponseDto findPass(LoginRequestDto.FindPassReqDto param) throws Exception {
+        log.info("MemberServiceImpl.findPass >>>>>>>>>>");
+        CommonResponseDto<JoinResponseDto.IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+log.info("hasMember = {}", hasMember(param));
+        if (hasMember(param)) {
+            //랜덤문자열 생성
+            String pass = new TempKey().getKey(15, false);
+
+            //위 문자열(비밀번호)을 암호화해서 넣어주기
+            String encPassword = passwordEncoder.encode(pass);
+
+            param.setRandomEncPass(encPassword);
+            loginDao.updateRandomPass(param);
+
+            MailHandler sendMail = new MailHandler(javaMailSender);
+            sendMail.setSubject("[RunninGo 임시비밀번호 입니다.]"); //메일제목
+            sendMail.setText(
+                    "<h1>RunninGo 임시비밀번호</h1>" +
+                            "<br>회원님의 임시비밀번호입니다." +
+                            "<br><b>" + pass + "</b>" +
+                            "<br>로그인 후 반드시 비밀번호를 변경해주세요!!");
+            sendMail.setFrom(myInfo.runningGoId, "러닝고");
+            sendMail.setTo(param.getEmail());
+            sendMail.send();
+            log.info("비밀번호 찾기 메일 발송 성공");
+        } else {
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(FIND_PASS_MISMATCH));
+        }
+        return response;
+
+    }
+
+    @Override
+    public boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception {
+        return loginDao.hasMember(param);
+    }
 
 }

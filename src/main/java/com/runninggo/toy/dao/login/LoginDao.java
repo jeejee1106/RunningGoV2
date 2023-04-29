@@ -9,7 +9,7 @@ public interface LoginDao {
     int login(LoginRequestDto.LoginReqDto param) throws Exception;
     boolean emailAuthFail(String id) throws Exception;
     List<LoginResponseDto.FindIdResDto> findId(LoginRequestDto.FindIdReqDto param) throws Exception;
-//    int getFindUserResult(MemberDto memberDto) throws Exception;
-//    int updateRandomPass(MemberDto memberDto) throws Exception;
+    boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception;
+    int updateRandomPass(LoginRequestDto.FindPassReqDto param) throws Exception;
     String getEncPass(String id) throws Exception;
 }

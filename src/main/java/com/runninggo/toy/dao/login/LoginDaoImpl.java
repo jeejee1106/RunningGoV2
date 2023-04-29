@@ -39,26 +39,25 @@ public class LoginDaoImpl implements LoginDao {
 
     @Override
     public List<LoginResponseDto.FindIdResDto> findId(LoginRequestDto.FindIdReqDto param) throws Exception {
-        List<LoginResponseDto.FindIdResDto> list = session.selectList(namespace + "findId", param);
-//        log.info("list.size = {}", list.size());
-//        log.info("list.get = {}", list.get(0));
-//        log.info("list = {}", list);
-//        for (LoginResponseDto.FindIdResDto findIdResDto : list) {
-//            log.info("findIdResDto = {}", findIdResDto);
-//        }
-        return list;
+        return session.selectList(namespace + "findId", param);
     }
 
-//    @Override
-//    public int getFindUserResult(MemberDto memberDto) throws Exception {
-//        return session.selectOne(namespace + "getFindUserResult", memberDto);
-//    }
-//
-//    @Override
-//    public int updateRandomPass(MemberDto memberDto) throws Exception {
-//        return session.update(namespace + "updateRandomPass", memberDto);
-//    }
-//
+    @Override
+    public boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception {
+        boolean hasMember = true;
+        int count = session.selectOne(namespace + "hasMember", param);
+
+        if (count == 0) {
+            hasMember = false;
+        }
+        return hasMember;
+    }
+
+    @Override
+    public int updateRandomPass(LoginRequestDto.FindPassReqDto param) throws Exception {
+        return session.update(namespace + "updateRandomPass", param);
+    }
+
     @Override
     public String getEncPass(String id) throws Exception {
         return session.selectOne(namespace + "getEncPass", id);

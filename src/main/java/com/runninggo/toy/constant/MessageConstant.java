@@ -10,6 +10,7 @@ public class MessageConstant {
     public final static String ID_DUPLICATE = "id.duplicate";
     public final static String LOGIN_MISMATCH = "login.mismatch";
     public final static String LOGIN_EMAIL_AUTH_FAIL = "login.email.auth.fail";
+    public final static String FIND_PASS_MISMATCH = "find.pass.mismatch";
 
 
 }
