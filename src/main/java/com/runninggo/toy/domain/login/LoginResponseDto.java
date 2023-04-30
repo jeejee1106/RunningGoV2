@@ -1,4 +1,4 @@
-package com.runninggo.toy.domain;
+package com.runninggo.toy.domain.login;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -3,8 +3,8 @@ package com.runninggo.toy.dao.join;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import static com.runninggo.toy.domain.JoinRequestDto.JoinReqDto;
-import static com.runninggo.toy.domain.JoinRequestDto.UpdateMailAuthReqDto;
+import static com.runninggo.toy.domain.join.JoinRequestDto.JoinReqDto;
+import static com.runninggo.toy.domain.join.JoinRequestDto.UpdateMailAuthReqDto;
 
 @Repository
 public class JoinDaoImpl implements JoinDao {

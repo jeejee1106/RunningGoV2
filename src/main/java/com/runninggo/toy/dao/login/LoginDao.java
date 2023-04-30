@@ -1,15 +1,15 @@
 package com.runninggo.toy.dao.login;
 
-import com.runninggo.toy.domain.LoginRequestDto;
-import com.runninggo.toy.domain.LoginResponseDto;
-
 import java.util.List;
 
+import static com.runninggo.toy.domain.login.LoginRequestDto.*;
+import static com.runninggo.toy.domain.login.LoginResponseDto.*;
+
 public interface LoginDao {
-    int login(LoginRequestDto.LoginReqDto param) throws Exception;
+    int login(LoginReqDto param) throws Exception;
     boolean emailAuthFail(String id) throws Exception;
-    List<LoginResponseDto.FindIdResDto> findId(LoginRequestDto.FindIdReqDto param) throws Exception;
-    boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception;
-    int updateRandomPass(LoginRequestDto.FindPassReqDto param) throws Exception;
+    List<FindIdResDto> findId(FindIdReqDto param) throws Exception;
+    boolean hasMember(FindPassReqDto param) throws Exception;
+    int updateRandomPass(FindPassReqDto param) throws Exception;
     String getEncPass(String id) throws Exception;
 }

@@ -2,9 +2,6 @@ package com.runninggo.toy.service.login;
 
 import com.runninggo.toy.dao.login.LoginDao;
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.domain.JoinResponseDto;
-import com.runninggo.toy.domain.LoginRequestDto;
-import com.runninggo.toy.domain.LoginResponseDto;
 import com.runninggo.toy.mail.MailHandler;
 import com.runninggo.toy.mail.TempKey;
 import com.runninggo.toy.myinfo.MyInfo;
@@ -22,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
+import static com.runninggo.toy.domain.login.LoginRequestDto.*;
+import static com.runninggo.toy.domain.login.LoginResponseDto.*;
 
 @Slf4j
 @Service
@@ -48,9 +47,9 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public CommonResponseDto login(LoginRequestDto.LoginReqDto param, boolean saveId,
+    public CommonResponseDto login(LoginReqDto param, boolean saveId,
                                    HttpServletResponse httpServletResponse, HttpSession session) throws Exception{
-        CommonResponseDto<JoinResponseDto.IdCheckResDto> response = new CommonResponseDto<>(messageSource(FAIL_CODE), "");
+        CommonResponseDto response = new CommonResponseDto<>(messageSource(FAIL_CODE), "");
 
         //pass 일치하는 회원 있는지 확인
         String rawPassword = param.getPass();
@@ -103,18 +102,18 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public CommonResponseDto findId(LoginRequestDto.FindIdReqDto param) throws Exception {
-        CommonResponseDto<LoginResponseDto.FindIdResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
-        List<LoginResponseDto.FindIdResDto> list = loginDao.findId(param);
+    public CommonResponseDto findId(FindIdReqDto param) throws Exception {
+        CommonResponseDto<FindIdResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        List<FindIdResDto> list = loginDao.findId(param);
         response.setResultList(list);
         return response;
     }
 
     @Transactional
     @Override
-    public CommonResponseDto findPass(LoginRequestDto.FindPassReqDto param) throws Exception {
+    public CommonResponseDto findPass(FindPassReqDto param) throws Exception {
         log.info("MemberServiceImpl.findPass >>>>>>>>>>");
-        CommonResponseDto<JoinResponseDto.IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        CommonResponseDto response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
 
         if (hasMember(param)) {
             //랜덤문자열 생성
@@ -136,12 +135,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception {
+    public boolean hasMember(FindPassReqDto param) throws Exception {
         return loginDao.hasMember(param);
     }
 
     @Async
-    public void sendTemporaryPasswordMail(LoginRequestDto.FindPassReqDto param, String randomPass) throws Exception {
+    public void sendTemporaryPasswordMail(FindPassReqDto param, String randomPass) throws Exception {
         try {
             MailHandler sendMail = new MailHandler(javaMailSender);
             sendMail.setSubject("[RunninGo 임시비밀번호 입니다.]"); //메일제목

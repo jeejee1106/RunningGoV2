@@ -1,6 +1,4 @@
-package com.runninggo.toy.domain;
-
-import lombok.Getter;
+package com.runninggo.toy.domain.join;
 
 public class JoinResponseDto {
 

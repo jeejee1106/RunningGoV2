@@ -5,8 +5,8 @@ import com.runninggo.toy.domain.CommonResponseDto;
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 
-import static com.runninggo.toy.domain.JoinRequestDto.*;
-import static com.runninggo.toy.domain.JoinResponseDto.IdCheckResDto;
+import static com.runninggo.toy.domain.join.JoinRequestDto.*;
+import static com.runninggo.toy.domain.join.JoinResponseDto.IdCheckResDto;
 
 public interface JoinService {
     CommonResponseDto<IdCheckResDto> idCheck(idCheckReqDto param);

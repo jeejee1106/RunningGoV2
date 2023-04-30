@@ -1,6 +1,6 @@
 package com.runninggo.toy.validator;
 
-import com.runninggo.toy.domain.JoinRequestDto;
+import com.runninggo.toy.domain.join.JoinRequestDto;
 import com.runninggo.toy.service.join.JoinService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

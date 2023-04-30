@@ -1,4 +1,4 @@
-package com.runninggo.toy.domain;
+package com.runninggo.toy.domain.join;
 
 import com.runninggo.toy.mail.TempKey;
 import lombok.Getter;

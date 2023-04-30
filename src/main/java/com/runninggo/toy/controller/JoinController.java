@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.runninggo.toy.domain.JoinRequestDto.*;
-import static com.runninggo.toy.domain.JoinResponseDto.*;
+import static com.runninggo.toy.domain.join.JoinRequestDto.*;
+import static com.runninggo.toy.domain.join.JoinResponseDto.*;
 
 @Slf4j
 @RestController

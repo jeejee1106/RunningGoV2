@@ -1,7 +1,7 @@
 package com.runninggo.toy.service.login;
 
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.domain.LoginRequestDto;
+import com.runninggo.toy.domain.login.LoginRequestDto;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

@@ -1,6 +1,6 @@
 package com.runninggo.toy.validator;
 
-import com.runninggo.toy.domain.JoinRequestDto;
+import com.runninggo.toy.domain.join.JoinRequestDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.Errors;

@@ -35,7 +35,7 @@
     </select>
 
     <!-- 아이디 찾기 -->
-    <select id="findId" parameterType="LoginRequestDto" resultType="com.runninggo.toy.domain.LoginResponseDto$FindIdResDto">
+    <select id="findId" parameterType="LoginRequestDto" resultType="com.runninggo.toy.domain.login.LoginResponseDto$FindIdResDto">
         select id, join_date from member where name=#{name} and email=#{email} and hp=#{hp}
     </select>
 

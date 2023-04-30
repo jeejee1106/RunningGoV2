@@ -1,7 +1,6 @@
 package com.runninggo.toy.controller;
 
 import com.runninggo.toy.domain.CommonResponseDto;
-import com.runninggo.toy.domain.LoginRequestDto;
 import com.runninggo.toy.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import static com.runninggo.toy.domain.login.LoginRequestDto.*;
 
 @Slf4j
 @RestController
@@ -22,7 +23,7 @@ public class LoginController {
     }
 
     @PostMapping()
-    public CommonResponseDto login(@Valid LoginRequestDto.LoginReqDto param, boolean saveId,
+    public CommonResponseDto login(@Valid LoginReqDto param, boolean saveId,
                                    HttpServletResponse httpServletResponse, HttpSession session) throws Exception {
         return loginService.login(param, saveId, httpServletResponse, session);
     }
@@ -33,12 +34,12 @@ public class LoginController {
     }
 
     @PostMapping("/findId")
-    public CommonResponseDto findId(LoginRequestDto.FindIdReqDto param) throws Exception{
+    public CommonResponseDto findId(FindIdReqDto param) throws Exception{
         return loginService.findId(param);
     }
 
     @PostMapping("/findPass")
-    public CommonResponseDto findPass(LoginRequestDto.FindPassReqDto param) throws Exception {
+    public CommonResponseDto findPass(FindPassReqDto param) throws Exception {
         return loginService.findPass(param);
     }
 }

@@ -1,12 +1,13 @@
 package com.runninggo.toy.dao.login;
 
-import com.runninggo.toy.domain.LoginRequestDto;
-import com.runninggo.toy.domain.LoginResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.runninggo.toy.domain.login.LoginRequestDto.*;
+import static com.runninggo.toy.domain.login.LoginResponseDto.*;
 
 @Slf4j
 @Repository
@@ -21,7 +22,7 @@ public class LoginDaoImpl implements LoginDao {
 
 
     @Override
-    public int login(LoginRequestDto.LoginReqDto param) throws Exception{
+    public int login(LoginReqDto param) throws Exception{
         return session.selectOne(namespace + "login", param);
     }
 
@@ -38,12 +39,12 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public List<LoginResponseDto.FindIdResDto> findId(LoginRequestDto.FindIdReqDto param) throws Exception {
+    public List<FindIdResDto> findId(FindIdReqDto param) throws Exception {
         return session.selectList(namespace + "findId", param);
     }
 
     @Override
-    public boolean hasMember(LoginRequestDto.FindPassReqDto param) throws Exception {
+    public boolean hasMember(FindPassReqDto param) throws Exception {
         boolean hasMember = true;
         int count = session.selectOne(namespace + "hasMember", param);
 
@@ -54,7 +55,7 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public int updateRandomPass(LoginRequestDto.FindPassReqDto param) throws Exception {
+    public int updateRandomPass(FindPassReqDto param) throws Exception {
         return session.update(namespace + "updateRandomPass", param);
     }
 
