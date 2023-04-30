@@ -63,8 +63,8 @@ public class LoginRequestDto {
             this.pass = pass;
         }
 
-        public void setRandomEncPass(String encPassword) {
-            setPass(encPassword);
+        public void setEncodedRandomPass(String encRandomPass) {
+            setPass(encRandomPass);
         }
 
         public FindPassReqDto(String id, String email) {
