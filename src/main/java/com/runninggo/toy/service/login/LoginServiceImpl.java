@@ -116,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
     public CommonResponseDto findPass(LoginRequestDto.FindPassReqDto param) throws Exception {
         log.info("MemberServiceImpl.findPass >>>>>>>>>>");
         CommonResponseDto<JoinResponseDto.IdCheckResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
-log.info("hasMember = {}", hasMember(param));
+
         if (hasMember(param)) {
             //랜덤문자열 생성
             String pass = new TempKey().getKey(15, false);
