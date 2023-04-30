@@ -80,6 +80,15 @@ public class JoinServiceImpl implements JoinService {
         //회원가입
         joinDao.insertMember(param);
 
+        //회원가입 인증메일 발송
+        /*
+            기존 컨트롤러에서 insertMember(), sendJoinCertificationMail()를 따로 호출했는데,
+            회원가입은 됐지만 메일 발송 시 에러가 터지는 상황을 생각했을 때, 트랙잭션 처리를 위해 같은 작업 단위로 묶는 것이 맞는 것 같다고 판단하여
+            해당 메서드에서 sendJoinCertificationMail()를 호출함.
+            비동기로 호출할 수 없다는 단점이 있음. 해결방법 생각해보기. 흠..
+         */
+        sendJoinCertificationMail(param);
+
         CommonResponseDto response = new CommonResponseDto();
         response.setReturnCode(messageSource(SUCCESS_CODE));
         response.setMessage(messageSource(SUCCESS));
@@ -90,21 +99,27 @@ public class JoinServiceImpl implements JoinService {
     @Async
     @Override
     public void sendJoinCertificationMail(JoinReqDto param) throws MessagingException, UnsupportedEncodingException {
+        try {
             //회원가입 완료하면 인증을 위한 이메일 발송
             MailHandler sendMail = new MailHandler(javaMailSender);
             sendMail.setSubject("[RunninGo 이메일 인증메일 입니다.]"); //메일제목
+            int aa = 5 / 0;
             sendMail.setText(
-                    "<h1>RunninGo 메일인증</h1>" +
-                    "<br>RunninGo에 오신것을 환영합니다!" +
-                    "<br>아래 [이메일 인증 확인]을 눌러주세요." +
-                    "<br><a href='http://localhost:8080/join/registerEmail?email=" + param.getEmail() +
-                    "&mailKey=" + param.getMailKey() +
-                    "' target='_blank'>이메일 인증 확인</a>");
+                            "<h1>RunninGo 메일인증</h1>" +
+                            "<br>RunninGo에 오신것을 환영합니다!" +
+                            "<br>아래 [이메일 인증 확인]을 눌러주세요." +
+                            "<br><a href='http://localhost:8080/join/registerEmail?email=" + param.getEmail() +
+                            "&mailKey=" + param.getMailKey() +
+                            "' target='_blank'>이메일 인증 확인</a>");
             sendMail.setFrom(myInfo.runningGoId, "러닝고");
             sendMail.setTo(param.getEmail());
             sendMail.send();
 
             log.info("회원가입 인증 메일 발송 성공");
+        } catch (Exception e) {
+            log.error("error >>>> sendJoinCertificationMail : {}", e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override

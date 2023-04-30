@@ -30,8 +30,6 @@ public class JoinController {
     @PostMapping()
     public CommonResponseDto joinCheck(@Valid JoinReqDto param) throws Exception{
         CommonResponseDto response = joinService.insertMember(param);
-        //인증메일 보내기
-        joinService.sendJoinCertificationMail(param);
         return response;
     }
 
