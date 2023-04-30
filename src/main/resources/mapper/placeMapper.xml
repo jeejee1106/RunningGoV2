@@ -5,8 +5,8 @@
 
     <!-- 게시글 insert -->
     <insert id="postsInsert" parameterType="PlaceRequestDto">
-        insert into place (id, local1, local2, subway, level, storage, distance, description, reason, posting_date, img)
-            values (#{id}, #{local1}, #{local2}, #{subway}, #{level}, #{storage}, #{distance}, #{description}, #{reason}, now(), #{img});
+        insert into course (id, local1, local2, subway_nm, level, storage, distance, desc, rcmnd_reason, img_url, del_yn, create_dt)
+            values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storage}, #{distance}, #{desc}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
     </insert>
 
     <!--  -->
