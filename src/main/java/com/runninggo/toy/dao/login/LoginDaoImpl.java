@@ -14,7 +14,7 @@ import static com.runninggo.toy.domain.login.LoginResponseDto.*;
 public class LoginDaoImpl implements LoginDao {
 
     private SqlSession session;
-    private static String namespace = "com.runninggo.toy.dao.MemberMapper.";
+    private static String namespace = "com.runninggo.toy.dao.LoginMapper.";
 
     public LoginDaoImpl(SqlSession session) {
         this.session = session;

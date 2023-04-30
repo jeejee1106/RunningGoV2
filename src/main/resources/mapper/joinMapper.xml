@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.runninggo.toy.dao.JoinMapper">
+
+    <!-- id중복체크 -->
+    <select id="isDuplicateId" parameterType="String" resultType="int">
+        select count(*) from member where id=#{id}
+    </select>
+
+    <!-- member테이블에 insert하기 -->
+    <insert id="insertMember" parameterType="JoinRequestDto">
+        insert into member(id, pass, name, email, hp, area, join_date, mail_key)
+        values(#{id}, #{pass}, #{name}, #{email}, #{hp}, #{area}, now(), #{mailKey})
+    </insert>
+
+    <!-- 메일인증을 하면 mail_auth 컬럼을 기본값0에서 1로 바꿔 로그인을 허용 -->
+    <update id="updateMailAuthZeroToOne" parameterType="JoinRequestDto">
+	    update member set mail_auth=1 where email=#{email} and mail_key=#{mailKey}
+    </update>
+
+    <!--  -->
+    <!--  -->
+</mapper>

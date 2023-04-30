@@ -10,7 +10,7 @@ import static com.runninggo.toy.domain.join.JoinRequestDto.UpdateMailAuthReqDto;
 public class JoinDaoImpl implements JoinDao {
 
     private SqlSession session;
-    private static String namespace = "com.runninggo.toy.dao.MemberMapper.";
+    private static String namespace = "com.runninggo.toy.dao.JoinMapper.";
 
     public JoinDaoImpl(SqlSession session) {
         this.session = session;
@@ -23,7 +23,7 @@ public class JoinDaoImpl implements JoinDao {
 
     @Override
     public boolean isDuplicateId(String id) {
-        int count = session.selectOne(namespace + "idCheck", id);
+        int count = session.selectOne(namespace + "isDuplicateId", id);
         boolean isDuplicateId = true;
 
         if (count == 0) {

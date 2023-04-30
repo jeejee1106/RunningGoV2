@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.runninggo.toy.dao.LoginMapper">
+
+    <!-- 암호화된 비밀번호 가져오기 -->
+    <select id="getEncPass" parameterType="String" resultType="String">
+        select pass from member where id=#{id}
+    </select>
+
+    <!-- 로그인 시 id, pass 체크 -->
+    <select id="login" parameterType="LoginRequestDto" resultType="int">
+        select count(*) from member where id=#{id} and pass=#{pass}
+    </select>
+
+    <!-- 이메일 인증을 안했으면 0을 반환, 로그인 시 인증 했나 안했나 체크하기 위함 -->
+    <select id="emailAuthFail" parameterType="String" resultType="int">
+        select count(*) from member where id=#{id} and mail_auth=1
+    </select>
+
+    <!-- 아이디 찾기 -->
+    <select id="findId" parameterType="LoginRequestDto" resultType="com.runninggo.toy.domain.login.LoginResponseDto$FindIdResDto">
+        select id, join_date from member where name=#{name} and email=#{email} and hp=#{hp}
+    </select>
+
+    <!-- 비밀번호 찾기 시 비밀번호 랜덤번호로 변경-->
+    <update id="updateRandomPass" parameterType="LoginRequestDto">
+        update member set pass=#{pass} where id=#{id};
+    </update>
+
+    <!-- 비밀번호 찾기 시 member가 맞는지 확인-->
+    <select id="hasMember" parameterType="LoginRequestDto" resultType="int">
+        select count(*) from member where id=#{id} and email=#{email}
+    </select>
+
+    <!--  -->
+    <!--  -->
+</mapper>
