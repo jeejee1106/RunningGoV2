@@ -1,7 +1,6 @@
 package com.runninggo.toy.dao.place;
 
-import com.runninggo.toy.dao.place.PlaceDao;
-import com.runninggo.toy.domain.PlaceDto;
+import com.runninggo.toy.domain.place.PlaceRequestDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +15,7 @@ public class PlaceDaoImpl implements PlaceDao {
     }
 
     @Override
-    public int postsInsert(PlaceDto placeDto) throws Exception{
+    public int postsInsert(PlaceRequestDto placeDto) throws Exception{
         return session.insert(namespace + "postsInsert", placeDto);
     }
 }

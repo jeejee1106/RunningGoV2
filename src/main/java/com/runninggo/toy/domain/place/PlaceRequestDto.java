@@ -1,4 +1,4 @@
-package com.runninggo.toy.domain;
+package com.runninggo.toy.domain.place;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class PlaceDto {
+public class PlaceRequestDto {
     private String id;
 
     @NotBlank(message = "필수입력 항목입니다.")

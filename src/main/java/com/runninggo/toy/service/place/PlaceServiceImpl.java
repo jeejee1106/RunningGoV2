@@ -1,7 +1,7 @@
 package com.runninggo.toy.service.place;
 
 import com.runninggo.toy.dao.place.PlaceDao;
-import com.runninggo.toy.domain.PlaceDto;
+import com.runninggo.toy.domain.place.PlaceRequestDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -67,7 +67,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public void postsInsert(PlaceDto placeDto) throws Exception {
+    public void postsInsert(PlaceRequestDto placeDto) throws Exception {
         placeDao.postsInsert(placeDto);
     }
 }
