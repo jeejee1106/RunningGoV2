@@ -1,11 +1,10 @@
 package com.runninggo.toy.controller;
 
-import com.runninggo.toy.domain.place.PlaceRequestDto;
-import com.runninggo.toy.service.place.PlaceService;
+import com.runninggo.toy.domain.course.CourseRequestDto;
 
+import com.runninggo.toy.service.course.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,29 +15,28 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/place")
-public class PlaceController {
+@RequestMapping("/course")
+public class CourseController {
 
-    private final PlaceService placeService;
+    private final CourseService courseService;
 
-    public PlaceController(PlaceService placeService) {
-        this.placeService = placeService;
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
     }
 
     @PostMapping()
-    public String InsertRecommendPlacePosts(@Valid PlaceRequestDto param) throws Exception{
+    public void InsertRecommendCoursePosts(@Valid CourseRequestDto param) throws Exception{
 
         if(param.getDistance() == null){
             param.setDistance(0.0);
         }
-        System.out.println("placeDto = " + param.getDistance());
-        placeService.postsInsert(param);
-        return "/place/recmndForm";
+        courseService.postsInsert(param);
+//        return "/place/recmndForm";
     }
 
     @ResponseBody
     @GetMapping(value = "/subway_search", produces = "application/json; charset=utf8")
     public List<String> getSubwayInfo(String subwayName) throws Exception{
-        return placeService.getSubwayInfo(subwayName);
+        return courseService.getSubwayInfo(subwayName);
     }
 }

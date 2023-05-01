@@ -1,7 +1,7 @@
-package com.runninggo.toy.service.place;
+package com.runninggo.toy.service.course;
 
-import com.runninggo.toy.dao.place.PlaceDao;
-import com.runninggo.toy.domain.place.PlaceRequestDto;
+import com.runninggo.toy.dao.course.CourseDao;
+import com.runninggo.toy.domain.course.CourseRequestDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -18,14 +18,14 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class PlaceServiceImpl implements PlaceService {
+public class CourseServiceImpl implements CourseService {
 
-    PlaceDao placeDao;
+    CourseDao courseDao;
     MyInfo myInfo;
 
-    public PlaceServiceImpl(MyInfo myInfo, PlaceDao placeDao) {
+    public CourseServiceImpl(MyInfo myInfo, CourseDao courseDao) {
         this.myInfo = myInfo;
-        this.placeDao = placeDao;
+        this.courseDao = courseDao;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public void postsInsert(PlaceRequestDto placeDto) throws Exception {
-        placeDao.postsInsert(placeDto);
+    public void postsInsert(CourseRequestDto param) throws Exception {
+        courseDao.postsInsert(param);
     }
 }

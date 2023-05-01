@@ -1,4 +1,4 @@
-package com.runninggo.toy.domain.place;
+package com.runninggo.toy.domain.course;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
-public class PlaceRequestDto {
+public class CourseRequestDto {
 
     @NotBlank(message = "필수입력 항목입니다.")
     @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")
