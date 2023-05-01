@@ -4,9 +4,9 @@
 <mapper namespace="com.runninggo.toy.dao.CourseMapper">
 
     <!-- 게시글 insert -->
-    <insert id="postsInsert" parameterType="CourseRequestDto">
-        insert into course (id, local1, local2, subway_nm, level, storage, distance, desc, rcmnd_reason, img_url, del_yn, create_dt)
-            values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storage}, #{distance}, #{desc}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
+    <insert id="insertCourse" parameterType="CourseRequestDto">
+        insert into course (id, local1, local2, subway_nm, level, storage, distance, description, rcmnd_reason, img_url, del_yn, create_dt)
+            values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storage}, #{distance}, #{description}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
     </insert>
 
     <!--  -->

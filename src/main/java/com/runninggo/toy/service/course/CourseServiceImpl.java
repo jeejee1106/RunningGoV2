@@ -1,11 +1,12 @@
 package com.runninggo.toy.service.course;
 
 import com.runninggo.toy.dao.course.CourseDao;
-import com.runninggo.toy.domain.course.CourseRequestDto;
+import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -16,16 +17,25 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.runninggo.toy.constant.MessageConstant.*;
+import static com.runninggo.toy.domain.course.CourseRequestDto.*;
+
 @Slf4j
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    CourseDao courseDao;
-    MyInfo myInfo;
+    private final CourseDao courseDao;
+    private final MessageSourceAccessor messageSource;
+    private final MyInfo myInfo;
 
-    public CourseServiceImpl(MyInfo myInfo, CourseDao courseDao) {
+    public CourseServiceImpl(MyInfo myInfo, MessageSourceAccessor messageSource, CourseDao courseDao) {
         this.myInfo = myInfo;
+        this.messageSource = messageSource;
         this.courseDao = courseDao;
+    }
+
+    public String messageSource(String messageCode) {
+        return messageSource.getMessage(messageCode);
     }
 
     @Override
@@ -67,7 +77,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void postsInsert(CourseRequestDto param) throws Exception {
-        courseDao.postsInsert(param);
+    public CommonResponseDto insertCourse(InsertCourseReqDto param) throws Exception {
+        CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        courseDao.insertCourse(param);
+        return response;
     }
 }

@@ -1,8 +1,9 @@
 package com.runninggo.toy.dao.course;
 
-import com.runninggo.toy.domain.course.CourseRequestDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import static com.runninggo.toy.domain.course.CourseRequestDto.*;
 
 @Repository
 public class CourseDaoImpl implements CourseDao {
@@ -15,7 +16,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public int postsInsert(CourseRequestDto param) throws Exception{
-        return session.insert(namespace + "postsInsert", param);
+    public int insertCourse(InsertCourseReqDto param) throws Exception{
+        return session.insert(namespace + "insertCourse", param);
     }
 }
