@@ -5,6 +5,7 @@ import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.myinfo.MyInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
 import static com.runninggo.toy.domain.course.CourseRequestDto.*;
+import static com.runninggo.toy.domain.course.CourseResponseDto.*;
 
 @Slf4j
 @Service
@@ -39,9 +41,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<String> getSubwayInfo(String subwayName) throws Exception {
-        List<String> lineList = new ArrayList<>();
-        String lineNum = "";
+    public CommonResponseDto getSubwayInfo(String subwayName) throws Exception {
+        CommonResponseDto response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        List<getSubwayInfoResDto> lineList = new ArrayList<>();
+        getSubwayInfoResDto dto;
 
         try {
             String encodeSubwayName = URLEncoder.encode(subwayName, "UTF-8");
@@ -64,16 +67,23 @@ public class CourseServiceImpl implements CourseService {
             // 베열 출력
             for (int i = 0; i < row.length(); i++) {
                 JSONObject obj = row.getJSONObject(i);
-                lineList.add(obj.getString("LINE_NUM"));
+                dto = new getSubwayInfoResDto(obj.getString("LINE_NUM"));
+                lineList.add(dto);
                 log.info("LINE_NUM = {}", lineList.get(i));
             }
+
+            response.setResultList(lineList);
+            return response;
+
+        } catch (JSONException e) {
+            log.error("JSONException >>>> getSubwayInfo : {}", e.getMessage());
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(FAIL));
+            return response;
         } catch (Exception e) {
-            log.error("error = {}", e.getMessage());
-            e.printStackTrace();
-            lineList.add("error");
-            return lineList;
+            log.error("error >>>> getSubwayInfo : {}", e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return lineList;
     }
 
     @Override

@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 import static com.runninggo.toy.domain.course.CourseRequestDto.*;
 
@@ -27,7 +26,7 @@ public class CourseController {
     }
 
     @GetMapping(value = "/subway", produces = "application/json; charset=utf8")
-    public List<String> getSubwayInfo(String subwayName) throws Exception{
+    public CommonResponseDto getSubwayInfo(String subwayName) throws Exception{
         return courseService.getSubwayInfo(subwayName);
     }
 }
