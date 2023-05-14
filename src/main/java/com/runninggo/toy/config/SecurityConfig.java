@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -26,16 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //스프링 �
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()//CorsFilter라는 필터가 존재. 이를 활성화 시키는 작업.
+                .httpBasic().disable() //rest api이므로 기본설정 미사용
+                .csrf().disable() //rest api이므로 csrf 보안 미사용. rest api를 이용한 서버라면, session 기반 인증과는 다르게 stateless하기 때문에 서버에 인증정보를 보관하지 않음..? 더 공부하기
+                .formLogin().disable() //rest api이므로 formLogin 미사용. 보안 검증은 formLogin 방식으로 하겠다. -> 얘를 활성화 시키면 /place/recmndForm 주소를 요청했을 때 403이 아닌 로그인 페이지가 뜬다!!
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt로 인증하므로 세션 미사용
+//                .cors()//CorsFilter라는 필터가 존재. 이를 활성화 시키는 작업.
                 .and()
-                .csrf().disable() //rest api를 이용한 서버라면, session 기반 인증과는 다르게 stateless하기 때문에 서버에 인증정보를 보관하지 않음..? 더 공부하기
                 .authorizeRequests() //여기부터 인증절차에 대한 설정을 진행하겠다. - 요청에 의한 보안검사 시작
                 .antMatchers("/").permitAll() //antMatchers : 특정 URL 에 대해서 어떻게 인증처리를 할지, permitAll : 스프링 시큐리티에서 인증이 되지 않더라도 통과
-                .antMatchers("/place/recmndForm").authenticated() //authenticated : 요청내에 스프링 시큐리티 컨텍스트 내에서 인증이 완료되어야 api를 사용할 수 있음. 인증되지 않으면 403에러
-                .and()
-                .formLogin() //보안 검증은 formLogin 방식으로 하겠다. -> 얘를 활성화 시키면 /place/recmndForm 주소를 요청했을 때 403이 아닌 로그인 페이지가 뜬다!!
-                .passwordParameter("pass") //스프링이 받는 파라미터는 각각 password, username인데, 내가 설정해준 값은 pass, id이기 때문에 이렇게 설정을 바꿔줘야한다.
-                .usernameParameter("id");
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/join/**").permitAll()
+                .anyRequest().authenticated(); ///login/**, /join/** 로 들어오는 요청을 제외하고 모두 인증을 하도록!!
+//                .and()
+//                .passwordParameter("pass") //스프링이 받는 파라미터는 각각 password, username인데, 내가 설정해준 값은 pass, id이기 때문에 이렇게 설정을 바꿔줘야한다.
+//                .usernameParameter("id");
 //                .headers().frameOptions().disable();
     }
 
