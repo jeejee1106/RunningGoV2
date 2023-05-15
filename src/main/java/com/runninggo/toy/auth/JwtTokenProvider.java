@@ -23,7 +23,7 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secretKey}")
     private String secretKey;
     private long tokenValidTime = 1000L * 60 * 30; // 30분
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailService userDetailsService; //CustomUserDetailService를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
 
     /**
      * 토큰 생성 메서드
@@ -69,32 +69,31 @@ public class JwtTokenProvider {
      * 토큰이 만료되었는지 확인해주는 메소드
      * token을 디코딩하여 만료시간을 끌고와 현재시간과 비교해 확인해준다.
      */
-    public boolean validateToken(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch(Exception e) {
-            return false;
-        }
-    }
-
-    // 토큰 정보를 검증하는 메서드
-    //흠 얘는 왜 에러가 나지? 위 메서드랑 비슷한 역할일 것 같다..
 //    public boolean validateToken(String token) {
 //        try {
-//            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-//            return true;
-//        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-//            log.info("Invalid JWT Token", e);
-//        } catch (ExpiredJwtException e) {
-//            log.info("Expired JWT Token", e);
-//        } catch (UnsupportedJwtException e) {
-//            log.info("Unsupported JWT Token", e);
-//        } catch (IllegalArgumentException e) {
-//            log.info("JWT claims string is empty.", e);
+//            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+//            return !claims.getBody().getExpiration().before(new Date());
+//        } catch(Exception e) {
+//            return false;
 //        }
-//        return false;
 //    }
+
+    // 토큰 정보를 검증하는 메서드
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (MalformedJwtException e) {
+            log.info("Invalid JWT Token", e);
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT Token", e);
+        } catch (IllegalArgumentException e) {
+            log.info("JWT claims string is empty.", e);
+        }
+        return false;
+    }
 
     /**
      * 토큰은 HTTP Header에 저장되어 계속적으로 이용되어진다.

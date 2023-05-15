@@ -1,6 +1,8 @@
 package com.runninggo.toy.config;
 
 import com.runninggo.toy.auth.JwtAuthenticationFilter;
+import com.runninggo.toy.auth.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * [스프링 시큐리티의 의존성 추가 시 일어나는 일들]
@@ -20,8 +23,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity //스프링 시큐리티 필터가 스프링 시큐리티 필터 체인(SpringSecurityFilterChain)에 등록됨
 public class SecurityConfig extends WebSecurityConfigurerAdapter { //스프링 시큐리티의 웹 보안 기능 초기화 및 설정 (현재 스프링부트에서 Deprecated됨 - 수정해야함)
+//public class SecurityConfig {
 
     /**
      * [@EnableWebSecurity]
@@ -35,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //스프링 �
      * - HttpSecurity 라는 세부적인 보안기능을 설정할수 있는 API를 제공하는 클래스를 생성한다.
      */
 
+    private final JwtTokenProvider jwtTokenProvider;
+//    @Bean
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -45,13 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //스프링 �
                 //여기까지가 rest-api를 위한 설정
 //                .cors()//CorsFilter라는 필터가 존재. 이를 활성화 시키는 작업.
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager())) //JWT 설정을 위해서는 formLogin 기능을 빼고 이렇게 사용자가 직접 필터 클래스를 만들어줘야 한다.
                 .authorizeRequests() //여기부터 인증절차에 대한 설정을 진행하겠다. - 요청에 의한 보안검사 시작
                 .antMatchers("/").permitAll() //antMatchers : 특정 URL 에 대해서 어떻게 인증처리를 할지, permitAll : 스프링 시큐리티에서 인증이 되지 않더라도 통과
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/join/**").permitAll()
-                .anyRequest().authenticated(); ///login/**, /join/** 로 들어오는 요청을 제외하고 모두 인증을 하도록!!
-//                .and()
+                .anyRequest().authenticated() ///login/**, /join/** 로 들어오는 요청을 제외하고 모두 인증을 하도록!!
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); //JWT 설정을 위해서는 formLogin 기능을 빼고 이렇게 사용자가 직접 필터 클래스를 만들어줘야 한다.
 //                .passwordParameter("pass") //스프링이 받는 파라미터는 각각 password, username인데, 내가 설정해준 값은 pass, id이기 때문에 이렇게 설정을 바꿔줘야한다.
 //                .usernameParameter("id");
 //                .headers().frameOptions().disable();
