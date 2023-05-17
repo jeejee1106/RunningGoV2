@@ -1,5 +1,6 @@
 package com.runninggo.toy.service.login;
 
+import com.runninggo.toy.auth.JwtTokenProvider;
 import com.runninggo.toy.dao.login.LoginDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.mail.MailHandler;
@@ -16,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
 import static com.runninggo.toy.domain.login.LoginRequestDto.*;
@@ -31,15 +34,17 @@ public class LoginServiceImpl implements LoginService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final MyInfo myInfo;
     private final MessageSourceAccessor messageSource;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public LoginServiceImpl(LoginDao loginDao, JavaMailSender javaMailSender,
                              BCryptPasswordEncoder passwordEncoder, MyInfo myInfo,
-                             MessageSourceAccessor messageSource) {
+                             MessageSourceAccessor messageSource, JwtTokenProvider jwtTokenProvider) {
         this.loginDao = loginDao;
         this.javaMailSender = javaMailSender;
         this.passwordEncoder = passwordEncoder;
         this.myInfo = myInfo;
         this.messageSource = messageSource;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public String messageSource(String messageCode) {
@@ -72,20 +77,19 @@ public class LoginServiceImpl implements LoginService {
         }
 
         //id, pass가 일치하고, 이메일 인증 했으면 세션을 생성하고, saveId 값을 체크해서 쿠키를 만들거나 삭제한다.
-        session.setAttribute("id", param.getId());
-        session.setAttribute("loginOK", "yes");
+//        session.setAttribute("id", param.getId());
+//        session.setAttribute("loginOK", "yes");
 
-        //이게 rest-api에서 로그인을 할 때 과연 필요할까??
-//        Cookie cookie = new Cookie("id", param.getId()); //1. 쿠키생성
-//        if (saveId){
-//            httpServletResponse.addCookie(cookie); //2. 응답에 저장
-//        } else {
-//            cookie.setMaxAge(0);
-//            httpServletResponse.addCookie(cookie);
-//        }
+
+        String token = jwtTokenProvider.createToken(param.getId());
+        log.info(">>>>>>>>token = {}", token); //로그인 시도하면 토큰 잘 받아옴!! 얏호!!!!! 그럼 CustomUserDetailService는 뭐하는애지???음...
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", "bearer " + token);
 
         response.setReturnCode(messageSource(SUCCESS_CODE));
         response.setMessage(messageSource(SUCCESS));
+        response.setResult(map);
 
         return response;
     }
