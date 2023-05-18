@@ -82,7 +82,7 @@ public class LoginServiceImpl implements LoginService {
 
 
         String token = jwtTokenProvider.createToken(param.getId());
-        log.info(">>>>>>>>token = {}", token); //로그인 시도하면 토큰 잘 받아옴!! 얏호!!!!! 그럼 CustomUserDetailService는 뭐하는애지???음...
+        log.info(">>>>>>>>token = {}", token); //로그인 시도하면 토큰 잘 받아옴!! 얏호!!!!! 그럼 UserDetailsServiceImpl는 뭐하는애지???음...
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", "bearer " + token);

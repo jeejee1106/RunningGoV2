@@ -23,7 +23,7 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secretKey}")
     private String secretKey;
     private long tokenValidTime = 1000L * 60 * 30; // 30분
-    private final CustomUserDetailService userDetailsService; //CustomUserDetailService를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
+    private final UserDetailsServiceImpl userDetailsService; //UserDetailsServiceImpl를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
 
     /**
      * 토큰 생성 메서드
