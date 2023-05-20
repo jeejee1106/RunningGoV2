@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     @Value("${spring.jwt.secretKey}")
-    private String secretKey;
+    private String SECRET_KEY;
     private long tokenValidTime = 1000L * 60 * 30; // 30분
     private final UserDetailsServiceImpl userDetailsService; //UserDetailsServiceImpl를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
 
@@ -32,11 +31,13 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
+        //jwt토큰 생성
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) //만료시간은 지금 시간으로부터 30분
-                .signWith(SignatureAlgorithm.HS256, secretKey) //서명할 때 사용되는 알고리즘은 HS256, 키는 위에서 지정한 값으로 진행
+                .setHeaderParam("typ", "JWT") // JWT HEADER에 들어갈 타입! JWT로 고정해주어야한다.
+                .setClaims(claims) //사용자 정보 세팅 (지금의 경우 sub만 세팅된 상태)
+                .setIssuedAt(now) //토큰 발급 시간 세팅
+                .setExpiration(new Date(now.getTime() + tokenValidTime)) //토큰 만료시간 세팅. 만료시간은 지금 시간으로부터 30분
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) //verify signature에 사용될 알고리즘과 시크릿키 지정 : 서명할 때 사용되는 알고리즘은 HS256, 키는 위에서 지정한 값으로 진행
                 .compact();
     }
 
@@ -59,7 +60,7 @@ public class JwtTokenProvider {
      */
     public String getMemberId(String token) {
         try {
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject(); //지정한 Secret Key를 통해 서명된 JWT를 해석하여 Subject를 끌고와 리턴하여 이를 통해 인증 객체를 끌고올 수 있다.
+            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject(); //지정한 Secret Key를 통해 서명된 JWT를 해석하여 Subject를 끌고와 리턴하여 이를 통해 인증 객체를 끌고올 수 있다.
         } catch(ExpiredJwtException e) {
             return e.getClaims().getSubject();
         }
@@ -70,18 +71,24 @@ public class JwtTokenProvider {
      * token을 디코딩하여 만료시간을 끌고와 현재시간과 비교해 확인해준다.
      */
 //    public boolean validateToken(String token) {
-//        try {
-//            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-//            return !claims.getBody().getExpiration().before(new Date());
-//        } catch(Exception e) {
-//            return false;
+//        //예시를 위한 메서드임. 이렇게 토큰 만료 검사를 해도 되고, 아래 메서드처럼 한번에 해도 될듯????
+//        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+//
+//        //getExpiration()이 현재 시각보다 이전이면 예외를 던지는 부분
+//        //이는 getExpiration()이 현재 시각보다 이전일 경우, 즉 만료시간이 현재 시각보다 과거여서 토큰이 만료됐을 경우에 예외를 발생시킨다는 뜻
+//        if (claims.getBody().getExpiration().before(new Date())) {
+////            throw new TokenInvalidExpiredException(); //직접 예외 클래스를 만들어줘도 되고
+//            throw new RuntimeException(); //일단 RuntimeException 던짐.
+//        } else {
+//            return true;
 //        }
 //    }
 
     // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            //이렇게 호출만 했을 때 토큰이 만료되면 알아서 ExpiredJwtException가 터지는지..? 궁금...
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
