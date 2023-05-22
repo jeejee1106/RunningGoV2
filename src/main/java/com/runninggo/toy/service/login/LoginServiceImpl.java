@@ -67,8 +67,9 @@ public class LoginServiceImpl implements LoginService {
         }
 
         //memberDto.setPass()에 암호화된 비밀번호 넣어주어 입력한 비밀번호가 암호화된 비번과 같게 처리.
-        param.setEncodedPass(encodedPassword);
-        loginDao.login(param);
+//        param.setEncodedPass(encodedPassword);
+//        loginDao.login(param);
+        //위 과정이 필요한지 의문!! 반환값이 있는 것도 아니고... pass를 다음 로직 어디서 쓰는 것도 아니고.. 일단 주석처리
 
         //이메일 인증 했는지 확인
         if (!emailAuthFail(param.getId())) {
@@ -76,14 +77,7 @@ public class LoginServiceImpl implements LoginService {
             return response;
         }
 
-        //id, pass가 일치하고, 이메일 인증 했으면 세션을 생성하고, saveId 값을 체크해서 쿠키를 만들거나 삭제한다.
-//        session.setAttribute("id", param.getId());
-//        session.setAttribute("loginOK", "yes");
-
-
         String token = jwtTokenProvider.createToken(param.getId());
-        log.info(">>>>>>>>token = {}", token); //로그인 시도하면 토큰 잘 받아옴!! 얏호!!!!! 그럼 UserDetailsServiceImpl는 뭐하는애지???음...
-
         Map<String, Object> map = new HashMap<>();
         map.put("token", "bearer " + token);
 

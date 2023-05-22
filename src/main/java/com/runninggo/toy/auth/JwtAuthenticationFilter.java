@@ -1,6 +1,7 @@
 package com.runninggo.toy.auth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -19,6 +20,7 @@ import java.io.IOException;
  * 쉽게 말해서, Username + Password를 통한 인증을 Jwt를 통해 수행한다는 것이다.
  */
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
@@ -26,12 +28,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        log.info(">>>>토큰필터에 들어옴");
         // 1. Request Header 에서 JWT 토큰 추출 -> JwtTokenProvider에 있는 resolveToken()과 비교해보기!
         String token = resolveToken((HttpServletRequest) request);
 
         // 2. validateToken 으로 토큰 유효성 검사
         if (token != null && jwtTokenProvider.validateToken(token)) {
+            log.info(">>>>>토큰이 유효함. 또는 토큰이 존재함");
             // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             //SecurityContext 에 저장

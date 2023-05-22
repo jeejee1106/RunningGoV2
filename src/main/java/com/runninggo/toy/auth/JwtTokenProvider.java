@@ -22,7 +22,7 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secretKey}")
     private String SECRET_KEY;
     private long tokenValidTime = 1000L * 60 * 30; // 30분
-    private final UserDetailsServiceImpl userDetailsService; //UserDetailsServiceImpl를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
+    private final UserDetailsServiceImpl userDetailsServiceimpl; //UserDetailsServiceImpl를 생성하고 직접 커스텀한 loadUserByUsername()를 사용하니 순환참조 이슈가 사라짐.
 
     /**
      * 토큰 생성 메서드
@@ -43,13 +43,13 @@ public class JwtTokenProvider {
 
     /**
      * 토큰으로 인증 객체(Authentication)을 얻기 위한 메소드
-     * UserDetailsService를 구현한 구현체인 MemberDetailsService에서
+     * UserDetailsService를 구현한 구현체인 UserDetailsServiceImpl에서
      * loadUserByUsername 메소드를 구현하여 실제 DB에 저장되어 있는 회원 객체를 끌고와 인증처리를 진행
      *
-     * 즉, 토큰을 통해 이미 인증된 객체를 memberDetailsService에서 불러와 인증객체를 얻어준다.
+     * 즉, 토큰을 통해 이미 인증된 객체를 userDetailsServiceimpl에서 불러와 인증객체를 얻어준다.
      */
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getMemberId(token));
+        UserDetails userDetails = userDetailsServiceimpl.loadUserByUsername(getMemberId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -60,7 +60,7 @@ public class JwtTokenProvider {
      */
     public String getMemberId(String token) {
         try {
-            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject(); //지정한 Secret Key를 통해 서명된 JWT를 해석하여 Subject를 끌고와 리턴하여 이를 통해 인증 객체를 끌고올 수 있다.
+            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject(); //지정한 Secret Key를 통해 서명된 JWT를 해석하여 Subject(보통 유저id)를 끌고와 리턴하여 이를 통해 인증 객체를 끌고올 수 있다.
         } catch(ExpiredJwtException e) {
             return e.getClaims().getSubject();
         }

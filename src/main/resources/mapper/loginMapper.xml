@@ -33,6 +33,11 @@
         select count(*) from member where id=#{id} and email=#{email}
     </select>
 
+    <!-- Authorization을 위해 id로 멤버존재여부 확인 -->
+    <select id="hasMemberByUsername" parameterType="LoginRequestDto" resultType="int">
+        select count(*) from member where id=#{username}
+    </select>
+
     <!--  -->
     <!--  -->
 </mapper>

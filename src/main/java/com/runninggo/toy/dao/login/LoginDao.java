@@ -10,6 +10,7 @@ public interface LoginDao {
     boolean emailAuthFail(String id) throws Exception;
     List<FindIdResDto> findId(FindIdReqDto param) throws Exception;
     boolean hasMember(FindPassReqDto param) throws Exception;
+    boolean hasMemberByUsername(String username) throws Exception;
     int updateRandomPass(FindPassReqDto param) throws Exception;
     String getEncPass(String id) throws Exception;
 }

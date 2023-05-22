@@ -64,4 +64,14 @@ public class LoginDaoImpl implements LoginDao {
         return session.selectOne(namespace + "getEncPass", id);
     }
 
+    @Override
+    public boolean hasMemberByUsername(String username) throws Exception {
+        boolean hasMemberByUsername = true;
+        int count = session.selectOne(namespace + "hasMemberByUsername", username);
+
+        if (count == 0) {
+            hasMemberByUsername = false;
+        }
+        return hasMemberByUsername;
+    }
 }
