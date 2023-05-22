@@ -87,7 +87,7 @@ public class JwtTokenProvider {
     // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {
         try {
-            //이렇게 호출만 했을 때 토큰이 만료되면 알아서 ExpiredJwtException가 터지는지..? 궁금...
+            //이렇게 호출만 했을 때 토큰이 만료되면 알아서 ExpiredJwtException가 터지는지..? 궁금... -> 맞음!!!!!!!!!! 대박신기!
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException e) {

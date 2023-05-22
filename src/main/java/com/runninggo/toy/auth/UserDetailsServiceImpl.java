@@ -41,6 +41,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             if(!hasMemberByUsername){
                 throw new UsernameNotFoundException("Check Email or Social ");
             }
+
+            UserDetailsImpl userDetailsImpl = new UserDetailsImpl();
+            // 값 세팅 로직 시작
+
+            userDetailsImpl.setId(username);
+
+            // 값 세팅 로직 끝
+            return userDetailsImpl;
         } catch (Exception e) {
             e.printStackTrace();
         }
