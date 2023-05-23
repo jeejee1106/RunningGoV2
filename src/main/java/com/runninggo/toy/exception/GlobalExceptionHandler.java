@@ -1,5 +1,7 @@
 package com.runninggo.toy.exception;
 
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
@@ -39,6 +41,20 @@ public class GlobalExceptionHandler {
     public ErrorResult noHandlerFoundException(NoHandlerFoundException e) {
         log.error("[ExceptionHandler] NOT_FOUND 발생 : ", e);
         return new ErrorResult("[404] NOT_FOUND", e.getMessage());
+    }
+
+    @ExceptionHandler(JwtException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public ErrorResult jwtException(Exception e) {
+        log.error("[ExceptionHandler] UNAUTHORIZED 발생 : ", e);
+        return new ErrorResult("[403] UNAUTHORIZED", e.getMessage());
+    }
+
+    @ExceptionHandler(MalformedJwtException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public ErrorResult MalformedJwtException(Exception e) {
+        log.error("[ExceptionHandler] MalformedJwtException 발생 : ", e);
+        return new ErrorResult("[403] MalformedJwtException", e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

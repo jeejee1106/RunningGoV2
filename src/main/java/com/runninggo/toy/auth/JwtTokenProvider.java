@@ -92,14 +92,18 @@ public class JwtTokenProvider {
             return true;
         } catch (MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
+            throw new MalformedJwtException("Invalid JWT Token");
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            throw new JwtException("Expired JWT Token");
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
+            throw new JwtException("Unsupported JWT Token");
         } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
+            log.info("JWT claims string is empty", e);
+            throw new JwtException("JWT claims string is empty");
         }
-        return false;
+//        return false;
     }
 
     /**
