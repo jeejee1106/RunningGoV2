@@ -6,6 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * UserDeatils객체를 통해 권한 정보를 관리하기 때문에 UserDetails를 구현한 구현체가 반드시 필요함
+ * 넘겨받은 정보를 통해 DB에서 찾은 사용자 정보
+ */
+
 @Setter
 public class UserDetailsImpl implements UserDetails {
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
  * 스프링 시큐리티는 UserDetailsService를 이용해서 회원의 존재만을 우선적으로 가져오고, 이후에 password가 틀리면 'Bad Cridential(잘못된 자격증명)'이라는 결과를 만들어낸다.(인증)
  * 사용자의 username과 password로 인증 과정이 끝나면 원하는 자원(URL)에 접근할 수 있는 적절한 권한이 있는지를 확인하고 인가 과정을 실행한다.
  * 이 과정에서는 'Access Denied'와 같은 결과가 만들어진다.
+ *
+ * 즉, UserDetailsService는 실제 DB에서 사용자 인증정보를 가져오는 역할을 한다.
  */
 
 @Service
