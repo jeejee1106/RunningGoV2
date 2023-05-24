@@ -104,6 +104,17 @@ public class JwtTokenProvider {
             throw new JwtException("JWT claims string is empty");
         }
 //        return false;
+        /**
+         * [여기서 터지는 예외가 RestControllerAdvice에 잡히지 않는 이유]
+         * RestControllerAdvice는 기본적으로 컨트롤러 계층의 예외만 처리한다.
+         * 그러나 스프링 시큐리티는 요청이 컨트롤러에 도달하기 전에 필터 체인에서 예외를 발생시킨다.
+         * 즉, 요청이 컨트롤러에 도달하기도 전에 이미 예외가 발생해서 요청이 컨트롤러에 도달하지도 못했기 때문에 @ControllerAdvice에서 처리를 할 수가 없다.
+         *
+         * 그렇다면?
+         * 스프링 시큐리티에서는 사용자가 인증되지 않았거나 AuthenticationException이 발생했을 때  AuthenticationEntryPoint에서 예외 처리를 시도한다.
+         * 따라서 AuthenticationEntryPoint의 구현체를 적절하게 이용한다면 @ControllerAdvice로 스프링 시큐리티 예외를 처리할 수 있을 것이다.
+         * */
+
     }
 
     /**
