@@ -1,6 +1,7 @@
 package com.runninggo.toy.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.runninggo.toy.exception.ErrorResult;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -35,14 +36,16 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        final Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
+//        final Map<String, Object> body = new HashMap<>();
+        ErrorResult errorResult = new ErrorResult("401", ex.getMessage());
+//        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+//        body.put("error", "Unauthorized");
         // ex.getMessage() 에는 jwtException을 발생시키면서 입력한 메세지가 들어있다.
-        body.put("message", ex.getMessage());
-        body.put("path", req.getServletPath());
+//        body.put("message", ex.getMessage());
+//        body.put("path", req.getServletPath());
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(res.getOutputStream(), body);
-        res.setStatus(HttpServletResponse.SC_OK);
+//        mapper.writeValue(res.getOutputStream(), body);
+        mapper.writeValue(res.getOutputStream(), errorResult);
+        res.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //현재 200OK를 반환함.. 상태코드를 400으로 낼 순 없을까?
     }
 }

@@ -61,10 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //스프링 �
                 .antMatchers("/join/**").permitAll()
                 .anyRequest().authenticated() ///login/**, /join/** 로 들어오는 요청을 제외하고 모두 인증을 하도록!!
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //JWT 설정을 위해서는 formLogin 기능을 빼고 이렇게 사용자가 직접 필터 클래스를 만들어줘야 한다.
-                .addFilterBefore(jwtExceptionFilter, new JwtAuthenticationFilter(jwtTokenProvider).getClass())
                 .exceptionHandling()
-                .authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //JWT 설정을 위해서는 formLogin 기능을 빼고 이렇게 사용자가 직접 필터 클래스를 만들어줘야 한다.
+                .addFilterBefore(jwtExceptionFilter, new JwtAuthenticationFilter(jwtTokenProvider).getClass());
 //                .passwordParameter("pass") //스프링이 받는 파라미터는 각각 password, username인데, 내가 설정해준 값은 pass, id이기 때문에 이렇게 설정을 바꿔줘야한다.
 //                .usernameParameter("id");
 //                .headers().frameOptions().disable();
