@@ -3,11 +3,17 @@
 
 <mapper namespace="com.runninggo.toy.dao.CourseMapper">
 
-    <!-- 게시글 insert -->
+    <!-- 코스 insert -->
     <insert id="insertCourse" parameterType="CourseRequestDto">
         insert into course (id, local1, local2, subway_nm, level, storage, distance, description, rcmnd_reason, img_url, del_yn, create_dt)
             values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storage}, #{distance}, #{description}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
     </insert>
 
-    <!--  -->
+    <!-- 코스 목록 조회 -->
+    <select id="getCourse" parameterType="CourseRequestDto" resultType="com.runninggo.toy.domain.course.CourseResponseDto$GetCourseResDto">
+        select idx, id, local1, local2, subway_nm, level, storage, distance, description, rcmnd_reason, img_url, del_yn, create_dt, update_dt
+        from course
+        where 1=1
+            <if test="id != null">AND id = #{id}</if>
+    </select>
 </mapper>

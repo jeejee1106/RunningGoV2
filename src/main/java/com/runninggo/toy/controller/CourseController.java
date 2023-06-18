@@ -20,13 +20,18 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @GetMapping(value = "/subway", produces = "application/json; charset=utf8")
+    public CommonResponseDto getSubwayInfo(String subwayName) throws Exception{
+        return courseService.getSubwayInfo(subwayName);
+    }
+
     @PostMapping
     public CommonResponseDto insertCourse(@Valid InsertCourseReqDto param) throws Exception{
         return courseService.insertCourse(param);
     }
 
-    @GetMapping(value = "/subway", produces = "application/json; charset=utf8")
-    public CommonResponseDto getSubwayInfo(String subwayName) throws Exception{
-        return courseService.getSubwayInfo(subwayName);
+    @GetMapping
+    public CommonResponseDto getCourse(@Valid GetCourseReqDto param) throws Exception {
+        return courseService.getCourse(param);
     }
 }

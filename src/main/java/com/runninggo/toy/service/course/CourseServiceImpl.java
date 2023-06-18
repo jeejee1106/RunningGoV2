@@ -92,4 +92,12 @@ public class CourseServiceImpl implements CourseService {
         courseDao.insertCourse(param);
         return response;
     }
+
+    @Override
+    public CommonResponseDto getCourse(GetCourseReqDto param) throws Exception {
+        CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        List<GetCourseResDto> list = courseDao.getCourse(param);
+        response.setResultList(list);
+        return response;
+    }
 }

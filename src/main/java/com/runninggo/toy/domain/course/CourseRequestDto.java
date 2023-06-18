@@ -67,4 +67,35 @@ public class CourseRequestDto {
             this.createDt = createDt;
         }
     }
+
+    @Getter
+    public static class GetCourseReqDto {
+
+        private String id;
+
+        private String local1;
+
+        private String local2;
+
+        private String subwayNm;
+
+        private String level;
+
+        private String storageYn;
+
+        private String delYn;
+
+        private LocalDateTime createDt;
+
+        public GetCourseReqDto(String id, String local1, String local2, String subwayNm, String level, String storageYn, String delYn, LocalDateTime createDt) {
+            this.id = id;
+            this.local1 = local1;
+            this.local2 = local2;
+            this.subwayNm = subwayNm;
+            this.level = level;
+            this.storageYn = storageYn;
+            this.delYn = delYn;
+            this.createDt = createDt;
+        }
+    }
 }
