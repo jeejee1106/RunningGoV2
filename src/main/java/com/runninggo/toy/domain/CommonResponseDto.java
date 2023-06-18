@@ -15,6 +15,7 @@ public class CommonResponseDto<T> {
     private String message;
     private T result;
     private List<T> resultList;
+    private Integer totalCount;
 
     public CommonResponseDto() {}
 

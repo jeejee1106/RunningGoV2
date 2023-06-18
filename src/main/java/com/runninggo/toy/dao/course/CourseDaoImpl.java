@@ -1,6 +1,5 @@
 package com.runninggo.toy.dao.course;
 
-import com.runninggo.toy.domain.course.CourseResponseDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +26,10 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public List<GetCourseResDto> getCourse(GetCourseReqDto param) throws Exception {
         return session.selectList(namespace + "getCourse", param);
+    }
+
+    @Override
+    public int getCourseTotalCount(GetCourseReqDto param) throws Exception {
+        return session.selectOne(namespace + "getCourseTotalCount", param);
     }
 }

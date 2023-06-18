@@ -98,6 +98,7 @@ public class CourseServiceImpl implements CourseService {
         CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
         List<GetCourseResDto> list = courseDao.getCourse(param);
         response.setResultList(list);
+        response.setTotalCount(courseDao.getCourseTotalCount(param));
         return response;
     }
 }
