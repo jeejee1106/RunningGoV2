@@ -31,7 +31,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public CommonResponseDto getCourse(@Valid GetCourseReqDto param) throws Exception {
-        return courseService.getCourse(param);
+    public CommonResponseDto getAllCourse(@Valid GetAllCourseReqDto param) throws Exception {
+        return courseService.getAllCourse(param);
     }
 }

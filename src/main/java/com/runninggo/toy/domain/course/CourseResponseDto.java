@@ -33,14 +33,14 @@ public class CourseResponseDto {
         private LocalDateTime createDt;
         private LocalDateTime updateDt;
 
-        public GetCourseResDto(Integer idx, String id, String local1, String local2, String subway_nm, String level,
+        public GetCourseResDto(Integer idx, String id, String local1, String local2, String subwayNm, String level,
                                String storageYn, String storage, Double distance, String description, String rcmndReason,
                                String imgUrl, String delYn, LocalDateTime createDt, LocalDateTime updateDt) {
             this.idx = idx;
             this.id = id;
             this.local1 = local1;
             this.local2 = local2;
-            this.subwayNm = subway_nm;
+            this.subwayNm = subwayNm;
             this.level = level;
             this.storageYn = storageYn;
             this.storage = storage;

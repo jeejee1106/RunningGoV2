@@ -24,12 +24,12 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<GetCourseResDto> getCourse(GetCourseReqDto param) throws Exception {
+    public List<GetCourseResDto> getAllCourse(GetAllCourseReqDto param) throws Exception {
         return session.selectList(namespace + "getCourse", param);
     }
 
     @Override
-    public int getCourseTotalCount(GetCourseReqDto param) throws Exception {
+    public int getCourseTotalCount(GetAllCourseReqDto param) throws Exception {
         return session.selectOne(namespace + "getCourseTotalCount", param);
     }
 }

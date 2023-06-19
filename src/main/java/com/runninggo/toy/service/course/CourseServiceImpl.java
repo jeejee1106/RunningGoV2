@@ -94,9 +94,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CommonResponseDto getCourse(GetCourseReqDto param) throws Exception {
+    public CommonResponseDto getAllCourse(GetAllCourseReqDto param) throws Exception {
         CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
-        List<GetCourseResDto> list = courseDao.getCourse(param);
+        List<GetCourseResDto> list = courseDao.getAllCourse(param);
         response.setResultList(list);
         response.setTotalCount(courseDao.getCourseTotalCount(param));
         return response;

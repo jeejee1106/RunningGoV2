@@ -69,7 +69,7 @@ public class CourseRequestDto {
     }
 
     @Getter
-    public static class GetCourseReqDto {
+    public static class GetAllCourseReqDto {
 
         private Integer idx;
         private String id;
@@ -81,7 +81,7 @@ public class CourseRequestDto {
         private String delYn;
         private LocalDateTime createDt;
 
-        public GetCourseReqDto(Integer idx, String id, String local1, String local2, String subwayNm, String level, String storageYn, String delYn, LocalDateTime createDt) {
+        public GetAllCourseReqDto(Integer idx, String id, String local1, String local2, String subwayNm, String level, String storageYn, String delYn, LocalDateTime createDt) {
             this.idx = idx;
             this.id = id;
             this.local1 = local1;

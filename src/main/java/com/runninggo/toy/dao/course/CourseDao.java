@@ -7,6 +7,6 @@ import static com.runninggo.toy.domain.course.CourseResponseDto.*;
 
 public interface CourseDao {
     int insertCourse(InsertCourseReqDto param) throws Exception;
-    List<GetCourseResDto> getCourse(GetCourseReqDto param) throws Exception;
-    int getCourseTotalCount(GetCourseReqDto param) throws Exception;
+    List<GetCourseResDto> getAllCourse(GetAllCourseReqDto param) throws Exception;
+    int getCourseTotalCount(GetAllCourseReqDto param) throws Exception;
 }
