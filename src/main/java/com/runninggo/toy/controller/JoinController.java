@@ -23,12 +23,12 @@ public class JoinController {
 
     //id 중복 체크
     @PostMapping("/id-check")
-    public CommonResponseDto<IdCheckResDto> idCheck(@Valid idCheckReqDto param) {
+    public CommonResponseDto<IdCheckResDto> idCheck(@Valid @RequestBody idCheckReqDto param) {
         return joinService.idCheck(param);
     }
 
     @PostMapping()
-    public CommonResponseDto joinCheck(@Valid JoinReqDto param) throws Exception{
+    public CommonResponseDto joinCheck(@Valid @RequestBody JoinReqDto param) throws Exception{
         CommonResponseDto response = joinService.insertMember(param);
         return response;
     }

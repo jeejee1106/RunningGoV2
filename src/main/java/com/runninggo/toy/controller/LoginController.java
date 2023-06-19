@@ -23,7 +23,7 @@ public class LoginController {
     }
 
     @PostMapping()
-    public CommonResponseDto login(@Valid LoginReqDto param, boolean saveId,
+    public CommonResponseDto login(@Valid @RequestBody LoginReqDto param, boolean saveId,
                                    HttpServletResponse httpServletResponse, HttpSession session) throws Exception {
         return loginService.login(param, saveId, httpServletResponse, session);
     }
@@ -34,12 +34,12 @@ public class LoginController {
     }
 
     @PostMapping("/findId")
-    public CommonResponseDto findId(FindIdReqDto param) throws Exception{
+    public CommonResponseDto findId(@Valid @RequestBody FindIdReqDto param) throws Exception{
         return loginService.findId(param);
     }
 
     @PostMapping("/findPass")
-    public CommonResponseDto findPass(FindPassReqDto param) throws Exception {
+    public CommonResponseDto findPass(@Valid @RequestBody FindPassReqDto param) throws Exception {
         return loginService.findPass(param);
     }
 }

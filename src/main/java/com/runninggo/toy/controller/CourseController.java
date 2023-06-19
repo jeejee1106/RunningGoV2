@@ -26,7 +26,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public CommonResponseDto insertCourse(@Valid InsertCourseReqDto param) throws Exception{
+    public CommonResponseDto insertCourse(@Valid @RequestBody InsertCourseReqDto param) throws Exception{
         return courseService.insertCourse(param);
     }
 
