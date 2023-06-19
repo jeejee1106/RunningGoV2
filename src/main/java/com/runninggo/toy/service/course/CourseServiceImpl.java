@@ -98,7 +98,7 @@ public class CourseServiceImpl implements CourseService {
         CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
         List<GetCourseResDto> list = courseDao.getAllCourse(param);
         response.setResultList(list);
-        response.setTotalCount(courseDao.getCourseTotalCount(param));
+        response.setTotalCount(courseDao.getCourseTotalCount(param)); //카운트가 0이어도 success코드 리턴함. 조건에 따라 0일 수 있기 때문
         return response;
     }
 
@@ -106,6 +106,11 @@ public class CourseServiceImpl implements CourseService {
     public CommonResponseDto getOneCourse(String courseIdx) throws Exception {
         CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
         response.setResult(courseDao.getOneCourse(courseIdx));
+
+        if (!courseDao.hasCourseByIdx(courseIdx)) { //카운트가 0이면 fail코드 리턴함. 단건조회이기 때문에 데이터가 존재해야함. (화면에 나타낼 때 꼭 필요한 데이터인지 아닌지를 기준으로 나눠봄.)
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(FAIL));
+        }
         return response;
     }
 }

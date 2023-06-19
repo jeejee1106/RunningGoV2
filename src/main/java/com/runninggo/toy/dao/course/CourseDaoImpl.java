@@ -39,4 +39,16 @@ public class CourseDaoImpl implements CourseDao {
     public CourseResponseDto.GetCourseResDto getOneCourse(String courseIdx) throws Exception {
         return session.selectOne(namespace + "getOneCourse", courseIdx);
     }
+
+    @Override
+    public boolean hasCourseByIdx(String courseIdx) throws Exception {
+        int count = session.selectOne(namespace + "hasCourseByIdx", courseIdx);
+        boolean hasCourse = true;
+
+        if (count == 0) {
+            hasCourse = false;
+        }
+
+        return hasCourse;
+    }
 }

@@ -12,4 +12,5 @@ public interface CourseDao {
     List<GetCourseResDto> getAllCourse(GetAllCourseReqDto param) throws Exception;
     int getCourseTotalCount(GetAllCourseReqDto param) throws Exception;
     CourseResponseDto.GetCourseResDto getOneCourse(String courseIdx) throws Exception;
+    boolean hasCourseByIdx(String courseIdx) throws Exception;
 }
