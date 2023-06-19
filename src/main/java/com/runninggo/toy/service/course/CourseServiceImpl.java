@@ -101,4 +101,11 @@ public class CourseServiceImpl implements CourseService {
         response.setTotalCount(courseDao.getCourseTotalCount(param));
         return response;
     }
+
+    @Override
+    public CommonResponseDto getOneCourse(String courseIdx) throws Exception {
+        CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        response.setResult(courseDao.getOneCourse(courseIdx));
+        return response;
+    }
 }

@@ -34,4 +34,9 @@ public class CourseController {
     public CommonResponseDto getAllCourse(@Valid GetAllCourseReqDto param) throws Exception {
         return courseService.getAllCourse(param);
     }
+
+    @GetMapping("/{courseIdx}")
+    public CommonResponseDto getOneCourse(@PathVariable String courseIdx) throws Exception {
+        return courseService.getOneCourse(courseIdx);
+    }
 }
