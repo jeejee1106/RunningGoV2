@@ -30,6 +30,9 @@ public class CourseRequestDto {
         @NotBlank(message = "필수입력 항목입니다.")
         private String level;
 
+        @NotBlank(message = "필수입력 항목입니다.")
+        private String storageYn;
+
         @Size(max = 50, message = "50자 이하로 입력해주세요")
         private String storage;
 
@@ -52,12 +55,13 @@ public class CourseRequestDto {
 
         private LocalDateTime createDt;
 
-        public InsertCourseReqDto(String id, String local1, String local2, String subwayNm, String level, String storage, Double distance, String description, String rcmndReason, String imgUrl, String delYn, LocalDateTime createDt) {
+        public InsertCourseReqDto(String id, String local1, String local2, String subwayNm, String level,String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl, String delYn, LocalDateTime createDt) {
             this.id = id;
             this.local1 = local1;
             this.local2 = local2;
             this.subwayNm = subwayNm;
             this.level = level;
+            this.storageYn = storageYn;
             this.storage = storage;
             this.distance = distance;
             this.description = description;

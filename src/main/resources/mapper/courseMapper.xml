@@ -5,8 +5,8 @@
 
     <!-- 코스 insert -->
     <insert id="insertCourse" parameterType="CourseRequestDto">
-        insert into course (id, local1, local2, subway_nm, level, storage, distance, description, rcmnd_reason, img_url, del_yn, create_dt)
-            values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storage}, #{distance}, #{description}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
+        insert into course (id, local1, local2, subway_nm, level, storage_yn, storage, distance, description, rcmnd_reason, img_url, del_yn, create_dt)
+            values (#{id}, #{local1}, #{local2}, #{subwayNm}, #{level}, #{storageYn}, #{storage}, #{distance}, #{description}, #{rcmndReason}, #{imgUrl}, #{delYn}, now());
     </insert>
 
     <!-- 코스 목록 조회 -->
