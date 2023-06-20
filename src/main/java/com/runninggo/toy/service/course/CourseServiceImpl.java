@@ -1,6 +1,5 @@
 package com.runninggo.toy.service.course;
 
-import com.runninggo.toy.auth.UserDetailsImpl;
 import com.runninggo.toy.dao.course.CourseDao;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.myinfo.MyInfo;
@@ -9,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,7 +79,7 @@ public class CourseServiceImpl implements CourseService {
         } catch (JSONException e) {
             log.error("JSONException >>>> getSubwayInfo : {}", e.getMessage());
             response.setReturnCode(messageSource(FAIL_CODE));
-            response.setMessage(messageSource(FAIL));
+            response.setMessage(messageSource(FAIL_MESSAGE_DATA_NOT_EXIST));
             return response;
         } catch (Exception e) {
             log.error("error >>>> getSubwayInfo : {}", e.getMessage());
@@ -92,7 +90,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CommonResponseDto insertCourse(InsertCourseReqDto param) throws Exception {
         CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
-        courseDao.insertCourse(param);
+        boolean isInserted = courseDao.insertCourse(param);
+
+        if (!isInserted) {
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(FAIL_MESSAGE));
+        }
         return response;
     }
 
@@ -110,9 +113,10 @@ public class CourseServiceImpl implements CourseService {
         CommonResponseDto<GetCourseResDto> response = new CommonResponseDto<>(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
         response.setResult(courseDao.getOneCourse(courseIdx));
 
-        if (!courseDao.hasCourseByIdx(courseIdx)) { //카운트가 0이면 fail코드 리턴함. 단건조회이기 때문에 데이터가 존재해야함. (화면에 나타낼 때 꼭 필요한 데이터인지 아닌지를 기준으로 나눠봄.)
+        boolean hasCourseByIdx = courseDao.hasCourseByIdx(courseIdx);
+        if (!hasCourseByIdx) { //카운트가 0이면 fail코드 리턴함. 단건조회이기 때문에 데이터가 존재해야함. (화면에 나타낼 때 꼭 필요한 데이터인지 아닌지를 기준으로 나눠봄.)
             response.setReturnCode(messageSource(FAIL_CODE));
-            response.setMessage(messageSource(FAIL));
+            response.setMessage(messageSource(FAIL_MESSAGE_DATA_NOT_EXIST));
         }
         return response;
     }
@@ -121,10 +125,11 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public CommonResponseDto patchCourse(String courseIdx, PatchCourseReqDto param) throws Exception {
         CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        boolean isUpdatedCourse = courseDao.patchCourse(param);
 
-        if (!courseDao.patchCourse(param)) {
+        if (!isUpdatedCourse) {
             response.setReturnCode(messageSource(FAIL_CODE));
-            response.setMessage(messageSource(FAIL_UPDATE));
+            response.setMessage(messageSource(FAIL_MESSAGE));
         }
         return response;
     }

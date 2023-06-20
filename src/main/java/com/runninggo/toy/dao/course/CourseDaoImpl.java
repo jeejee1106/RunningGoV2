@@ -23,8 +23,15 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public int insertCourse(InsertCourseReqDto param) throws Exception{
-        return session.insert(namespace + "insertCourse", param);
+    public boolean insertCourse(InsertCourseReqDto param) throws Exception{
+        int count = session.insert(namespace + "insertCourse", param);
+        boolean isInserted = true;
+
+        if (count == 0) {
+            isInserted = false;
+        }
+
+        return isInserted;
     }
 
     @Override

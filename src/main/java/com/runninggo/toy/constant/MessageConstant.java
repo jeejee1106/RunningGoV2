@@ -6,8 +6,8 @@ public class MessageConstant {
     public final static String FAIL_CODE = "fail.code";
 
     public final static String SUCCESS = "success";
-    public final static String FAIL = "fail";
-    public final static String FAIL_UPDATE = "fail.update";
+    public final static String FAIL_MESSAGE_DATA_NOT_EXIST = "fail.message.data.not.exist";
+    public final static String FAIL_MESSAGE = "fail.message";
 
     public final static String ID_SUCCESS = "id.success";
     public final static String ID_DUPLICATE = "id.duplicate";
