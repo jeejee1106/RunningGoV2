@@ -9,4 +9,5 @@ public interface CourseService {
     CommonResponseDto insertCourse(InsertCourseReqDto param) throws Exception;
     CommonResponseDto getAllCourse(GetAllCourseReqDto param) throws Exception;
     CommonResponseDto getOneCourse(String courseIdx) throws Exception;
+    CommonResponseDto patchCourse(String courseIdx, PatchCourseReqDto param) throws Exception;
 }

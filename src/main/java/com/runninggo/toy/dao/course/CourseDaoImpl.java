@@ -1,11 +1,13 @@
 package com.runninggo.toy.dao.course;
 
-import com.runninggo.toy.domain.CommonResponseDto;
+import com.runninggo.toy.auth.UserDetailsImpl;
 import com.runninggo.toy.domain.course.CourseResponseDto;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.runninggo.toy.domain.course.CourseRequestDto.*;
 import static com.runninggo.toy.domain.course.CourseResponseDto.*;
@@ -50,5 +52,17 @@ public class CourseDaoImpl implements CourseDao {
         }
 
         return hasCourse;
+    }
+
+    @Override
+    public boolean patchCourse(PatchCourseReqDto param) throws Exception {
+        int count = session.update(namespace + "patchCourse", param);
+        boolean hasUpdate = true;
+
+        if (count == 0) {
+            hasUpdate = false;
+        }
+
+        return hasUpdate;
     }
 }

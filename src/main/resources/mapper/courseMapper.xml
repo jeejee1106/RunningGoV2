@@ -53,4 +53,24 @@
             AND idx = #{courseIdx}
             AND del_yn = 'N'
     </select>
+
+    <update id="patchCourse" parameterType="CourseRequestDto">
+        update course
+        set
+              local1 = #{local1}
+            , local2 = #{local2}
+            , subway_nm = #{subwayNm}
+            , level = #{level}
+            , storage_yn = #{storageYn}
+            , storage = #{storage}
+            , distance = #{distance}
+            , description = #{description}
+            , rcmnd_reason = #{rcmndReason}
+            , img_url = #{imgUrl}
+            , del_yn = #{delYn}
+            , update_dt = now()
+        where 1=1
+            AND idx = #{idx}
+            AND id = #{id}
+    </update>
 </mapper>
