@@ -1,8 +1,6 @@
 package com.runninggo.toy.dao.course;
 
-import com.runninggo.toy.auth.UserDetailsImpl;
 import com.runninggo.toy.domain.course.CourseResponseDto;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +15,5 @@ public interface CourseDao {
     CourseResponseDto.GetCourseResDto getOneCourse(String courseIdx) throws Exception;
     boolean hasCourseByIdx(String courseIdx) throws Exception;
     boolean patchCourse(PatchCourseReqDto param) throws Exception;
+    boolean deleteCourse(Map<String, Object> map) throws Exception;
 }

@@ -73,4 +73,12 @@
             AND idx = #{idx}
             AND id = #{id}
     </update>
+
+    <update id="deleteCourse" parameterType="HashMap">
+        update course
+        set del_yn = 'Y'
+        where 1=1
+            AND idx = #{idx}
+            AND id = #{id}
+    </update>
 </mapper>

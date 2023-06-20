@@ -18,6 +18,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.runninggo.toy.constant.MessageConstant.*;
 import static com.runninggo.toy.domain.course.CourseRequestDto.*;
@@ -128,6 +129,18 @@ public class CourseServiceImpl implements CourseService {
         boolean isUpdatedCourse = courseDao.patchCourse(param);
 
         if (!isUpdatedCourse) {
+            response.setReturnCode(messageSource(FAIL_CODE));
+            response.setMessage(messageSource(FAIL_MESSAGE));
+        }
+        return response;
+    }
+
+    @Override
+    public CommonResponseDto deleteCourse(Map<String, Object> map) throws Exception {
+        CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
+        boolean isDeletedCourse = courseDao.deleteCourse(map);
+
+        if (!isDeletedCourse) {
             response.setReturnCode(messageSource(FAIL_CODE));
             response.setMessage(messageSource(FAIL_MESSAGE));
         }

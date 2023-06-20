@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.runninggo.toy.domain.course.CourseRequestDto.*;
 
 @Slf4j
@@ -53,6 +56,21 @@ public class CourseController {
         param.setIdForJwtInfo(userId);
         param.setIdxByPathVariable(courseIdx);
         return courseService.patchCourse(param);
+    }
+
+    /**
+     * 코스 삭제 (논리)
+     */
+    @DeleteMapping("/{courseIdx}")
+    public CommonResponseDto deleteCourse(@PathVariable String courseIdx,
+                                          @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        String userId = userDetails.getUsername();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", userId);
+        map.put("idx", courseIdx);
+
+        return courseService.deleteCourse(map);
     }
 
 
