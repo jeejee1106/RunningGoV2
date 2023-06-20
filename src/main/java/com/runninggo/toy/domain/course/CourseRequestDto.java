@@ -141,9 +141,6 @@ public class CourseRequestDto {
 
         private String imgUrl;
 
-        @NotBlank(message = "필수입력 항목입니다.")
-        private String delYn;
-
         //값을 함부로 바꾸는 것을 방지하기 위해 setter는 private로 막아놓고 아래 public 메서드를 이용하게 한다.(더 명확한 메서드명으로 명명)
         private void setId(String id) {
             this.id = id;
@@ -163,7 +160,8 @@ public class CourseRequestDto {
             setIdx((idx));
         }
 
-        public PatchCourseReqDto(String idx, String id, String local1, String local2, String subwayNm, String level,String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl, String delYn) {
+        public PatchCourseReqDto(String idx, String id, String local1, String local2, String subwayNm, String level,
+                                 String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl) {
             this.idx = idx;
             this.id = id;
             this.local1 = local1;
@@ -176,7 +174,6 @@ public class CourseRequestDto {
             this.description = description;
             this.rcmndReason = rcmndReason;
             this.imgUrl = imgUrl;
-            this.delYn = delYn;
         }
     }
 }

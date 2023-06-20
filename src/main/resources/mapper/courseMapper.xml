@@ -67,18 +67,21 @@
             , description = #{description}
             , rcmnd_reason = #{rcmndReason}
             , img_url = #{imgUrl}
-            , del_yn = #{delYn}
             , update_dt = now()
         where 1=1
             AND idx = #{idx}
             AND id = #{id}
+            AND del_yn = 'N'
     </update>
 
     <update id="deleteCourse" parameterType="HashMap">
         update course
-        set del_yn = 'Y'
+        set
+            del_yn = 'Y'
+          , update_dt = now()
         where 1=1
             AND idx = #{idx}
             AND id = #{id}
+            AND del_yn = 'N'
     </update>
 </mapper>
