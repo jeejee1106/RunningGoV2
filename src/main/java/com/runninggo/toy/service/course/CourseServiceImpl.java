@@ -123,7 +123,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public CommonResponseDto patchCourse(String courseIdx, PatchCourseReqDto param) throws Exception {
+    public CommonResponseDto patchCourse(PatchCourseReqDto param) throws Exception {
         CommonResponseDto response = new CommonResponseDto(messageSource(SUCCESS_CODE), messageSource(SUCCESS));
         boolean isUpdatedCourse = courseDao.patchCourse(param);
 

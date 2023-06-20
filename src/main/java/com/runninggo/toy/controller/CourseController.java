@@ -4,8 +4,6 @@ import com.runninggo.toy.auth.UserDetailsImpl;
 import com.runninggo.toy.domain.CommonResponseDto;
 import com.runninggo.toy.service.course.CourseService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +28,10 @@ public class CourseController {
     }
 
     @PostMapping
-    public CommonResponseDto insertCourse(@Valid @RequestBody InsertCourseReqDto param) throws Exception{
+    public CommonResponseDto insertCourse(@Valid @RequestBody InsertCourseReqDto param,
+                                          @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception{
+        String userId = userDetails.getUsername();
+        param.setIdForJwtInfo(userId);
         return courseService.insertCourse(param);
     }
 
@@ -51,7 +52,7 @@ public class CourseController {
         String userId = userDetails.getUsername();
         param.setIdForJwtInfo(userId);
         param.setIdxByPathVariable(courseIdx);
-        return courseService.patchCourse(courseIdx, param);
+        return courseService.patchCourse(param);
     }
 
 

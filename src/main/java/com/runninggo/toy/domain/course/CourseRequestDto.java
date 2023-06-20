@@ -11,8 +11,6 @@ public class CourseRequestDto {
     @Getter
     public static class InsertCourseReqDto {
 
-        @NotBlank(message = "필수입력 항목입니다.")
-        @Pattern(regexp = "^[a-z0-9]{5,20}$", message = "5~20자의 영문 소문자, 숫자만 사용 가능합니다.")
         private String id;
 
         @NotBlank(message = "필수입력 항목입니다.")
@@ -51,6 +49,16 @@ public class CourseRequestDto {
         private String delYn;
 
         private LocalDateTime createDt;
+
+        //값을 함부로 바꾸는 것을 방지하기 위해 setter는 private로 막아놓고 아래 public 메서드를 이용하게 한다.(더 명확한 메서드명으로 명명)
+        private void setId(String id) {
+            this.id = id;
+        }
+
+        //어떤 작업을 하는 메서드인지 알 수 있게 메서드명을 확실하게 지어보자.
+        public void setIdForJwtInfo(String id) {
+            setId((id));
+        }
 
         public InsertCourseReqDto(String id, String local1, String local2, String subwayNm, String level,String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl, String delYn, LocalDateTime createDt) {
             this.id = id;
