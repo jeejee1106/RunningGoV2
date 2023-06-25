@@ -23,6 +23,8 @@ public class LoginRequestDto {
             setPass(encodedPass);
         }
 
+        public LoginReqDto() {} //@RequestBody가 붙으면 기본생성자가 꼭 필효하다고 한다.
+
         public LoginReqDto(String id, String pass) {
             this.id = id;
             this.pass = pass;
@@ -40,6 +42,8 @@ public class LoginRequestDto {
 
         @NotBlank(message = "필수입력 항목입니다.")
         private String hp;
+
+        public FindIdReqDto() {}
 
         public FindIdReqDto(String name, String email, String hp) {
             this.name = name;
@@ -66,6 +70,8 @@ public class LoginRequestDto {
         public void setEncodedRandomPass(String encRandomPass) {
             setPass(encRandomPass);
         }
+
+        public FindPassReqDto() {}
 
         public FindPassReqDto(String id, String email) {
             this.id = id;

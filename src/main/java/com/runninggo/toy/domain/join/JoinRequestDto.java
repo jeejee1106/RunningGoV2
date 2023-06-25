@@ -15,6 +15,8 @@ public class JoinRequestDto {
         @NotNull(message = "필수입력 항목입니다.")
         private String id;
 
+        public idCheckReqDto() {}
+
         public idCheckReqDto(String id) {
             this.id = id;
         }
@@ -70,6 +72,8 @@ public class JoinRequestDto {
         public void setEncodePass(String pass) {
             setPass(pass);
         }
+
+        public JoinReqDto() {}
 
         public JoinReqDto(String id, String pass, String passCheck, String name, String email, String hp, String area, LocalDateTime join_date, String mailKey) {
             this.id = id;

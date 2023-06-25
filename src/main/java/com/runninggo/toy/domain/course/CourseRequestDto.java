@@ -60,6 +60,8 @@ public class CourseRequestDto {
             setId((id));
         }
 
+        public InsertCourseReqDto() {}
+
         public InsertCourseReqDto(String id, String local1, String local2, String subwayNm, String level,String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl, String delYn, LocalDateTime createDt) {
             this.id = id;
             this.local1 = local1;
@@ -159,6 +161,8 @@ public class CourseRequestDto {
         public void setIdxByPathVariable(String idx) {
             setIdx((idx));
         }
+
+        public PatchCourseReqDto() {}
 
         public PatchCourseReqDto(String idx, String id, String local1, String local2, String subwayNm, String level,
                                  String storageYn, String storage, Double distance, String description, String rcmndReason, String imgUrl) {
