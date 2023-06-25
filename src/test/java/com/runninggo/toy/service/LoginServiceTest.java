@@ -1,92 +1,52 @@
-//package com.runninggo.toy.service;
-//
-//import com.runninggo.toy.domain.MemberDto;
-//import com.runninggo.toy.service.login.LoginService;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit.jupiter.SpringExtension;
-//
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//
-//@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**.xml"})
-//public class LoginServiceTest {
-//
-//    @Autowired
-//    LoginService loginService;
-//
-//    public MemberDto loginMemberDto(String id, String pass) {
-//        MemberDto memberDto = new MemberDto();
-//        memberDto.setId(id);
-//        memberDto.setPass(pass);
-//        return memberDto;
-//    }
-//
-//    public MemberDto findIdMemberDto(String name, String email, String hp) {
-//        MemberDto memberDto = new MemberDto();
-//        memberDto.setName(name);
-//        memberDto.setEmail(email);
-//        memberDto.setHp(hp);
-//        return memberDto;
-//    }
-//
-//    @Test
-//    @DisplayName("로그인성공")
-//    public void loginSuccessTest() throws Exception{
-//        MemberDto memberDto = loginMemberDto("11111", "rla7748%");
-//
-//        System.out.println("memberDto = " + memberDto);
-//
-//        int result = loginService.login(memberDto);
-//        System.out.println("result = " + result);
-//
-//        assertTrue(result==1);
-//    }
-//
-//    @Test
-//    @DisplayName("로그인실패_id불일치")
-//    public void loginFailTest_Id() throws Exception{
-//        MemberDto memberDto = loginMemberDto("울랄라", "rla7748%");
-//
-//        System.out.println("memberDto = " + memberDto);
-//
-//        int result = loginService.login(memberDto);
-//        System.out.println("result = " + result);
-//
-//        assertTrue(result!=1);
-//    }
-//
-//    @Test
-//    @DisplayName("로그인실패_pass불일치")
-//    public void loginFailTest_Pass() throws Exception{
-//        MemberDto memberDto = loginMemberDto("11111", "111");
-//
-//        System.out.println("memberDto = " + memberDto);
-//
-//        int result = loginService.login(memberDto);
-//        System.out.println("result = " + result);
-//
-//        assertTrue(result!=1);
-//    }
-//
-//    @Test
-//    @DisplayName("로그인실패_둘다불일치")
-//    public void loginFailTest() throws Exception{
-//        MemberDto memberDto = loginMemberDto("bb", "bb");
-//
-//        System.out.println("memberDto = " + memberDto);
-//
-//        int result = loginService.login(memberDto);
-//        System.out.println("result = " + result);
-//
-//        assertTrue(result!=1);
-//    }
-//
+package com.runninggo.toy.service;
+
+import com.runninggo.toy.domain.CommonResponseDto;
+import com.runninggo.toy.service.login.LoginService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static com.runninggo.toy.domain.login.LoginRequestDto.*;
+import static org.assertj.core.api.Assertions.*;
+
+@SpringBootTest
+public class LoginServiceTest {
+
+    private final LoginService loginService;
+
+    @Autowired
+    public LoginServiceTest(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @Test
+    @DisplayName("로그인성공")
+    public void loginSuccessTest() throws Exception{
+        //given - 이런 상황에서
+        LoginReqDto test = new LoginReqDto("11111", "PnlrDhdjxiHiJxj");
+
+        //when - 이 액션을 취하면
+        CommonResponseDto login = loginService.login(test);
+
+        //then - 이런 결과가 나와야해
+        assertThat(login.getReturnCode()).isEqualTo("0000");
+    }
+
+    @Test
+    @DisplayName("로그인실패_id_pass불일치")
+    public void loginFailTest_Id() throws Exception{
+        //given - 이런 상황에서
+        LoginReqDto test = new LoginReqDto("22222", "PnlrDhdjxiHiJxj");
+
+        //when - 이 액션을 취하면
+        CommonResponseDto login = loginService.login(test);
+
+        //then - 이런 결과가 나와야해
+        assertThat(login.getReturnCode()).isEqualTo("9999");
+    }
+
+
 //    @Test
 //    @DisplayName("아이디찾기성공")
 //    void findIdSuccessTest() throws Exception {
@@ -106,4 +66,4 @@
 //        System.out.println("list = " + list.size());
 //        assertTrue(list.size()==0);
 //    }
-//}
+}

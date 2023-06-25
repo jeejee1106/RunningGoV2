@@ -23,9 +23,8 @@ public class LoginController {
     }
 
     @PostMapping()
-    public CommonResponseDto login(@Valid @RequestBody LoginReqDto param, boolean saveId,
-                                   HttpServletResponse httpServletResponse, HttpSession session) throws Exception {
-        return loginService.login(param, saveId, httpServletResponse, session);
+    public CommonResponseDto login(@Valid @RequestBody LoginReqDto param) throws Exception {
+        return loginService.login(param);
     }
 
     @GetMapping("/logout")

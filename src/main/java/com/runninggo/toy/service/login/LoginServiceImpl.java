@@ -52,8 +52,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public CommonResponseDto login(LoginReqDto param, boolean saveId,
-                                   HttpServletResponse httpServletResponse, HttpSession session) throws Exception{
+    public CommonResponseDto login(LoginReqDto param) throws Exception{
         CommonResponseDto response = new CommonResponseDto<>(messageSource(FAIL_CODE), "");
 
         //pass 일치하는 회원 있는지 확인
