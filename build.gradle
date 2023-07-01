@@ -28,7 +28,6 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.73'
     implementation 'javax.servlet:jstl:1.2'
-//    api 'org.projectlombok:lombok:1.18.26'
     implementation 'org.apache.tiles:tiles-jsp:3.0.8'
     implementation 'org.json:json:20210307'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
@@ -36,7 +35,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-//    providedCompile 'org.springframework.boot:spring-boot-starter-tomcat:2.7.10'
 }
 
 group = 'com.toy.runninggo'

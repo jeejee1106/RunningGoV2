@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.HashMap;
@@ -55,20 +54,14 @@ public class LoginServiceImpl implements LoginService {
     public CommonResponseDto login(LoginReqDto param) throws Exception{
         CommonResponseDto response = new CommonResponseDto<>(messageSource(FAIL_CODE), "");
 
-        //pass 일치하는 회원 있는지 확인
-        String rawPassword = param.getPass();
-        String encodedPassword = loginDao.getEncPass(param.getId());
+        String rawPassword = param.getPass(); //입력받은 비밀번호
+        String encodedPassword = loginDao.getEncPass(param.getId()); //암호화된 비밀번호 가져오기 by id
 
         //입력받은 비밀번호와 암호화된 비밀번호를 비교(matches)
         if(!passwordEncoder.matches(rawPassword, encodedPassword)) {
             response.setMessage(messageSource(LOGIN_MISMATCH));
             return response;
         }
-
-        //memberDto.setPass()에 암호화된 비밀번호 넣어주어 입력한 비밀번호가 암호화된 비번과 같게 처리.
-//        param.setEncodedPass(encodedPassword);
-//        loginDao.login(param);
-        //위 과정이 필요한지 의문!! 반환값이 있는 것도 아니고... pass를 다음 로직 어디서 쓰는 것도 아니고.. 일단 주석처리
 
         //이메일 인증 했는지 확인
         if (!emailAuthFail(param.getId())) {

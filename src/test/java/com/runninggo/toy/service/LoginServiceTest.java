@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 
 import static com.runninggo.toy.domain.login.LoginRequestDto.*;
 import static org.assertj.core.api.Assertions.*;
@@ -14,6 +15,8 @@ import static org.assertj.core.api.Assertions.*;
 public class LoginServiceTest {
 
     private final LoginService loginService;
+
+    private MockMvc mockMvc;
 
     @Autowired
     public LoginServiceTest(LoginService loginService) {
@@ -29,6 +32,7 @@ public class LoginServiceTest {
         //when - 이 액션을 취하면
         CommonResponseDto login = loginService.login(test);
 
+//        mockMvc.perform();
         //then - 이런 결과가 나와야해
         assertThat(login.getReturnCode()).isEqualTo("0000");
     }
